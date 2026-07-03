@@ -54,7 +54,7 @@ class TestSecretsManagerInstanceManagementV2:
     @needscredentials
     def test_create_vault_admintoken(self):
         response = self.secrets_manager_instance_management_service.create_vault_admintoken(
-            instance_id='60b40daa-1fd3-4f35-a994-2409cc0f270c',
+            instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
         )
 
         assert response.get_status_code() == 201
@@ -64,7 +64,7 @@ class TestSecretsManagerInstanceManagementV2:
     @needscredentials
     def test_get_instance(self):
         response = self.secrets_manager_instance_management_service.get_instance(
-            instance_id='60b40daa-1fd3-4f35-a994-2409cc0f270c',
+            instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
         )
 
         assert response.get_status_code() == 200
@@ -74,7 +74,7 @@ class TestSecretsManagerInstanceManagementV2:
     @needscredentials
     def test_delete_instance_admintokens(self):
         response = self.secrets_manager_instance_management_service.delete_instance_admintokens(
-            instance_id='60b40daa-1fd3-4f35-a994-2409cc0f270c',
+            instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
         )
 
         assert response.get_status_code() == 204

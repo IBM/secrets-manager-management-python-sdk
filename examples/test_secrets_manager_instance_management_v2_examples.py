@@ -86,7 +86,7 @@ class TestSecretsManagerInstanceManagementV2Examples:
             # begin-create_vault_admintoken
 
             response = secrets_manager_instance_management_service.create_vault_admintoken(
-                instance_id='60b40daa-1fd3-4f35-a994-2409cc0f270c',
+                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
             )
             token = response.get_result()
 
@@ -108,7 +108,7 @@ class TestSecretsManagerInstanceManagementV2Examples:
             # begin-get_instance
 
             response = secrets_manager_instance_management_service.get_instance(
-                instance_id='60b40daa-1fd3-4f35-a994-2409cc0f270c',
+                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
             )
             instance = response.get_result()
 
@@ -128,7 +128,7 @@ class TestSecretsManagerInstanceManagementV2Examples:
             # begin-delete_instance_admintokens
 
             response = secrets_manager_instance_management_service.delete_instance_admintokens(
-                instance_id='60b40daa-1fd3-4f35-a994-2409cc0f270c',
+                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
             )
 
             # end-delete_instance_admintokens
