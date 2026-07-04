@@ -107,7 +107,7 @@ class TestCreateVaultAdmintoken:
         create_vault_admintoken()
         """
         # Set up mock
-        url = preprocess_url('/api/v2/instances/60b40daa-1fd3-4f35-a994-2409cc0f270c/admintokens')
+        url = preprocess_url('/api/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/admintokens')
         mock_response = '{"token": "hvs.CAESIIG_PILmULFYOsEyWHxkZ2mF2a8V...example...p3ZnpWbDF1RUNjUkNTZEg"}'
         responses.add(
             responses.POST,
@@ -118,7 +118,7 @@ class TestCreateVaultAdmintoken:
         )
 
         # Set up parameter values
-        instance_id = '60b40daa-1fd3-4f35-a994-2409cc0f270c'
+        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
 
         # Invoke method
         response = _service.create_vault_admintoken(
@@ -145,7 +145,7 @@ class TestCreateVaultAdmintoken:
         test_create_vault_admintoken_value_error()
         """
         # Set up mock
-        url = preprocess_url('/api/v2/instances/60b40daa-1fd3-4f35-a994-2409cc0f270c/admintokens')
+        url = preprocess_url('/api/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/admintokens')
         mock_response = '{"token": "hvs.CAESIIG_PILmULFYOsEyWHxkZ2mF2a8V...example...p3ZnpWbDF1RUNjUkNTZEg"}'
         responses.add(
             responses.POST,
@@ -156,7 +156,7 @@ class TestCreateVaultAdmintoken:
         )
 
         # Set up parameter values
-        instance_id = '60b40daa-1fd3-4f35-a994-2409cc0f270c'
+        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -188,7 +188,7 @@ class TestDeleteInstanceAdmintokens:
         delete_instance_admintokens()
         """
         # Set up mock
-        url = preprocess_url('/api/v2/instances/60b40daa-1fd3-4f35-a994-2409cc0f270c/admintokens')
+        url = preprocess_url('/api/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/admintokens')
         responses.add(
             responses.DELETE,
             url,
@@ -196,7 +196,7 @@ class TestDeleteInstanceAdmintokens:
         )
 
         # Set up parameter values
-        instance_id = '60b40daa-1fd3-4f35-a994-2409cc0f270c'
+        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
 
         # Invoke method
         response = _service.delete_instance_admintokens(
@@ -223,7 +223,7 @@ class TestDeleteInstanceAdmintokens:
         test_delete_instance_admintokens_value_error()
         """
         # Set up mock
-        url = preprocess_url('/api/v2/instances/60b40daa-1fd3-4f35-a994-2409cc0f270c/admintokens')
+        url = preprocess_url('/api/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/admintokens')
         responses.add(
             responses.DELETE,
             url,
@@ -231,7 +231,7 @@ class TestDeleteInstanceAdmintokens:
         )
 
         # Set up parameter values
-        instance_id = '60b40daa-1fd3-4f35-a994-2409cc0f270c'
+        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -302,8 +302,8 @@ class TestGetInstance:
         get_instance()
         """
         # Set up mock
-        url = preprocess_url('/api/v2/instances/60b40daa-1fd3-4f35-a994-2409cc0f270c')
-        mock_response = '{"instance": {"id": "crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::", "plan": {"name": "standard"}}, "vault_cluster": {"status": "healthy", "version": "1.21.2+ent.hsm"}, "endpoints": {"public": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}, "private": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}}, "encryption": {"mode": "service_managed", "provider": "key_protect", "key_crn": "crn:v1:bluemix:public:kms:us-south:a/791f5fb10986423e97aa8512f18b7e65:31639268-42e8-4420-9872-590a6ee20506:key:b4af8f76-e6ea-4dc5-89cc-5f1b9bb207cc"}}'
+        url = preprocess_url('/api/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39')
+        mock_response = '{"instance_crn": "crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::", "plan": "dedicated", "vault_cluster": {"status": "healthy", "version": "1.21.2+ent.hsm"}, "endpoints": {"public": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}, "private": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}}, "encryption": {"mode": "service_managed", "provider": "key_protect", "key_crn": "crn:v1:bluemix:public:kms:us-south:a/791f5fb10986423e97aa8512f18b7e65:31639268-42e8-4420-9872-590a6ee20506:key:b4af8f76-e6ea-4dc5-89cc-5f1b9bb207cc"}}'
         responses.add(
             responses.GET,
             url,
@@ -313,7 +313,7 @@ class TestGetInstance:
         )
 
         # Set up parameter values
-        instance_id = '60b40daa-1fd3-4f35-a994-2409cc0f270c'
+        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
 
         # Invoke method
         response = _service.get_instance(
@@ -340,8 +340,8 @@ class TestGetInstance:
         test_get_instance_value_error()
         """
         # Set up mock
-        url = preprocess_url('/api/v2/instances/60b40daa-1fd3-4f35-a994-2409cc0f270c')
-        mock_response = '{"instance": {"id": "crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::", "plan": {"name": "standard"}}, "vault_cluster": {"status": "healthy", "version": "1.21.2+ent.hsm"}, "endpoints": {"public": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}, "private": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}}, "encryption": {"mode": "service_managed", "provider": "key_protect", "key_crn": "crn:v1:bluemix:public:kms:us-south:a/791f5fb10986423e97aa8512f18b7e65:31639268-42e8-4420-9872-590a6ee20506:key:b4af8f76-e6ea-4dc5-89cc-5f1b9bb207cc"}}'
+        url = preprocess_url('/api/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39')
+        mock_response = '{"instance_crn": "crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::", "plan": "dedicated", "vault_cluster": {"status": "healthy", "version": "1.21.2+ent.hsm"}, "endpoints": {"public": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}, "private": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}}, "encryption": {"mode": "service_managed", "provider": "key_protect", "key_crn": "crn:v1:bluemix:public:kms:us-south:a/791f5fb10986423e97aa8512f18b7e65:31639268-42e8-4420-9872-590a6ee20506:key:b4af8f76-e6ea-4dc5-89cc-5f1b9bb207cc"}}'
         responses.add(
             responses.GET,
             url,
@@ -351,7 +351,7 @@ class TestGetInstance:
         )
 
         # Set up parameter values
-        instance_id = '60b40daa-1fd3-4f35-a994-2409cc0f270c'
+        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -396,13 +396,6 @@ class TestModel_Instance:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        vault_dedicated_instance_plan_model = {}  # VaultDedicatedInstancePlan
-        vault_dedicated_instance_plan_model['name'] = 'standard'
-
-        vault_dedicated_instance_metadata_model = {}  # VaultDedicatedInstanceMetadata
-        vault_dedicated_instance_metadata_model['id'] = 'crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::'
-        vault_dedicated_instance_metadata_model['plan'] = vault_dedicated_instance_plan_model
-
         vault_dedicated_cluster_model = {}  # VaultDedicatedCluster
         vault_dedicated_cluster_model['status'] = 'healthy'
         vault_dedicated_cluster_model['version'] = '1.21.2+ent.hsm'
@@ -422,7 +415,8 @@ class TestModel_Instance:
 
         # Construct a json representation of a Instance model
         instance_model_json = {}
-        instance_model_json['instance'] = vault_dedicated_instance_metadata_model
+        instance_model_json['instance_crn'] = 'crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::'
+        instance_model_json['plan'] = 'dedicated'
         instance_model_json['vault_cluster'] = vault_dedicated_cluster_model
         instance_model_json['endpoints'] = vault_dedicated_instance_endpoints_model
         instance_model_json['encryption'] = vault_dedicated_instance_encryption_model
@@ -602,72 +596,6 @@ class TestModel_VaultDedicatedInstanceEndpoints:
         # Convert model instance back to dict and verify no loss of data
         vault_dedicated_instance_endpoints_model_json2 = vault_dedicated_instance_endpoints_model.to_dict()
         assert vault_dedicated_instance_endpoints_model_json2 == vault_dedicated_instance_endpoints_model_json
-
-
-class TestModel_VaultDedicatedInstanceMetadata:
-    """
-    Test Class for VaultDedicatedInstanceMetadata
-    """
-
-    def test_vault_dedicated_instance_metadata_serialization(self):
-        """
-        Test serialization/deserialization for VaultDedicatedInstanceMetadata
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        vault_dedicated_instance_plan_model = {}  # VaultDedicatedInstancePlan
-        vault_dedicated_instance_plan_model['name'] = 'standard'
-
-        # Construct a json representation of a VaultDedicatedInstanceMetadata model
-        vault_dedicated_instance_metadata_model_json = {}
-        vault_dedicated_instance_metadata_model_json['id'] = 'crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::'
-        vault_dedicated_instance_metadata_model_json['plan'] = vault_dedicated_instance_plan_model
-
-        # Construct a model instance of VaultDedicatedInstanceMetadata by calling from_dict on the json representation
-        vault_dedicated_instance_metadata_model = VaultDedicatedInstanceMetadata.from_dict(vault_dedicated_instance_metadata_model_json)
-        assert vault_dedicated_instance_metadata_model != False
-
-        # Construct a model instance of VaultDedicatedInstanceMetadata by calling from_dict on the json representation
-        vault_dedicated_instance_metadata_model_dict = VaultDedicatedInstanceMetadata.from_dict(vault_dedicated_instance_metadata_model_json).__dict__
-        vault_dedicated_instance_metadata_model2 = VaultDedicatedInstanceMetadata(**vault_dedicated_instance_metadata_model_dict)
-
-        # Verify the model instances are equivalent
-        assert vault_dedicated_instance_metadata_model == vault_dedicated_instance_metadata_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        vault_dedicated_instance_metadata_model_json2 = vault_dedicated_instance_metadata_model.to_dict()
-        assert vault_dedicated_instance_metadata_model_json2 == vault_dedicated_instance_metadata_model_json
-
-
-class TestModel_VaultDedicatedInstancePlan:
-    """
-    Test Class for VaultDedicatedInstancePlan
-    """
-
-    def test_vault_dedicated_instance_plan_serialization(self):
-        """
-        Test serialization/deserialization for VaultDedicatedInstancePlan
-        """
-
-        # Construct a json representation of a VaultDedicatedInstancePlan model
-        vault_dedicated_instance_plan_model_json = {}
-        vault_dedicated_instance_plan_model_json['name'] = 'standard'
-
-        # Construct a model instance of VaultDedicatedInstancePlan by calling from_dict on the json representation
-        vault_dedicated_instance_plan_model = VaultDedicatedInstancePlan.from_dict(vault_dedicated_instance_plan_model_json)
-        assert vault_dedicated_instance_plan_model != False
-
-        # Construct a model instance of VaultDedicatedInstancePlan by calling from_dict on the json representation
-        vault_dedicated_instance_plan_model_dict = VaultDedicatedInstancePlan.from_dict(vault_dedicated_instance_plan_model_json).__dict__
-        vault_dedicated_instance_plan_model2 = VaultDedicatedInstancePlan(**vault_dedicated_instance_plan_model_dict)
-
-        # Verify the model instances are equivalent
-        assert vault_dedicated_instance_plan_model == vault_dedicated_instance_plan_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        vault_dedicated_instance_plan_model_json2 = vault_dedicated_instance_plan_model.to_dict()
-        assert vault_dedicated_instance_plan_model_json2 == vault_dedicated_instance_plan_model_json
 
 
 # endregion

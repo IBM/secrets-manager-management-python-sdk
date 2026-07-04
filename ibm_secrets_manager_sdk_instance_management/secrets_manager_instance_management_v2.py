@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.114.0-a902401e-20260427-192904
+# IBM OpenAPI SDK Code Generator Version: 3.114.4-9b56d441-20260612-210048
 
 """
 With IBM Cloud® Secrets Manager Instance Management API, you can manage service instances
@@ -251,10 +251,10 @@ class SecretsManagerInstanceManagementV2(BaseService):
 
 class Instance:
     """
-    Instance.
+    The service instance information.
 
-    :param VaultDedicatedInstanceMetadata instance: Instance metadata for Vault
-          Dedicated instances.
+    :param str instance_crn: The instance CRN identifier.
+    :param str plan: Instance plan name.
     :param VaultDedicatedCluster vault_cluster: Vault cluster information for Vault
           Dedicated instances.
     :param VaultDedicatedInstanceEndpoints endpoints: Instance endpoints for Vault
@@ -265,7 +265,8 @@ class Instance:
 
     def __init__(
         self,
-        instance: 'VaultDedicatedInstanceMetadata',
+        instance_crn: str,
+        plan: str,
         vault_cluster: 'VaultDedicatedCluster',
         endpoints: 'VaultDedicatedInstanceEndpoints',
         encryption: 'VaultDedicatedInstanceEncryption',
@@ -273,8 +274,8 @@ class Instance:
         """
         Initialize a Instance object.
 
-        :param VaultDedicatedInstanceMetadata instance: Instance metadata for Vault
-               Dedicated instances.
+        :param str instance_crn: The instance CRN identifier.
+        :param str plan: Instance plan name.
         :param VaultDedicatedCluster vault_cluster: Vault cluster information for
                Vault Dedicated instances.
         :param VaultDedicatedInstanceEndpoints endpoints: Instance endpoints for
@@ -282,7 +283,8 @@ class Instance:
         :param VaultDedicatedInstanceEncryption encryption: Vault encryption
                configuration for Vault Dedicated instances.
         """
-        self.instance = instance
+        self.instance_crn = instance_crn
+        self.plan = plan
         self.vault_cluster = vault_cluster
         self.endpoints = endpoints
         self.encryption = encryption
@@ -291,10 +293,14 @@ class Instance:
     def from_dict(cls, _dict: Dict) -> 'Instance':
         """Initialize a Instance object from a json dictionary."""
         args = {}
-        if (instance := _dict.get('instance')) is not None:
-            args['instance'] = VaultDedicatedInstanceMetadata.from_dict(instance)
+        if (instance_crn := _dict.get('instance_crn')) is not None:
+            args['instance_crn'] = instance_crn
         else:
-            raise ValueError('Required property \'instance\' not present in Instance JSON')
+            raise ValueError('Required property \'instance_crn\' not present in Instance JSON')
+        if (plan := _dict.get('plan')) is not None:
+            args['plan'] = plan
+        else:
+            raise ValueError('Required property \'plan\' not present in Instance JSON')
         if (vault_cluster := _dict.get('vault_cluster')) is not None:
             args['vault_cluster'] = VaultDedicatedCluster.from_dict(vault_cluster)
         else:
@@ -317,11 +323,10 @@ class Instance:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'instance') and self.instance is not None:
-            if isinstance(self.instance, dict):
-                _dict['instance'] = self.instance
-            else:
-                _dict['instance'] = self.instance.to_dict()
+        if hasattr(self, 'instance_crn') and self.instance_crn is not None:
+            _dict['instance_crn'] = self.instance_crn
+        if hasattr(self, 'plan') and self.plan is not None:
+            _dict['plan'] = self.plan
         if hasattr(self, 'vault_cluster') and self.vault_cluster is not None:
             if isinstance(self.vault_cluster, dict):
                 _dict['vault_cluster'] = self.vault_cluster
@@ -356,6 +361,14 @@ class Instance:
     def __ne__(self, other: 'Instance') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+    class PlanEnum(str, Enum):
+        """
+        Instance plan name.
+        """
+
+        DEDICATED = 'dedicated'
+
 
 
 class Token:
@@ -740,144 +753,3 @@ class VaultDedicatedInstanceEndpoints:
     def __ne__(self, other: 'VaultDedicatedInstanceEndpoints') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
-
-class VaultDedicatedInstanceMetadata:
-    """
-    Instance metadata for Vault Dedicated instances.
-
-    :param str id: The instance CRN identifier.
-    :param VaultDedicatedInstancePlan plan: Instance plan information.
-    """
-
-    def __init__(
-        self,
-        id: str,
-        plan: 'VaultDedicatedInstancePlan',
-    ) -> None:
-        """
-        Initialize a VaultDedicatedInstanceMetadata object.
-
-        :param str id: The instance CRN identifier.
-        :param VaultDedicatedInstancePlan plan: Instance plan information.
-        """
-        self.id = id
-        self.plan = plan
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'VaultDedicatedInstanceMetadata':
-        """Initialize a VaultDedicatedInstanceMetadata object from a json dictionary."""
-        args = {}
-        if (id := _dict.get('id')) is not None:
-            args['id'] = id
-        else:
-            raise ValueError('Required property \'id\' not present in VaultDedicatedInstanceMetadata JSON')
-        if (plan := _dict.get('plan')) is not None:
-            args['plan'] = VaultDedicatedInstancePlan.from_dict(plan)
-        else:
-            raise ValueError('Required property \'plan\' not present in VaultDedicatedInstanceMetadata JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a VaultDedicatedInstanceMetadata object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'plan') and self.plan is not None:
-            if isinstance(self.plan, dict):
-                _dict['plan'] = self.plan
-            else:
-                _dict['plan'] = self.plan.to_dict()
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this VaultDedicatedInstanceMetadata object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'VaultDedicatedInstanceMetadata') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'VaultDedicatedInstanceMetadata') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class VaultDedicatedInstancePlan:
-    """
-    Instance plan information.
-
-    :param str name: The plan name of this instance.
-    """
-
-    def __init__(
-        self,
-        name: str,
-    ) -> None:
-        """
-        Initialize a VaultDedicatedInstancePlan object.
-
-        :param str name: The plan name of this instance.
-        """
-        self.name = name
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'VaultDedicatedInstancePlan':
-        """Initialize a VaultDedicatedInstancePlan object from a json dictionary."""
-        args = {}
-        if (name := _dict.get('name')) is not None:
-            args['name'] = name
-        else:
-            raise ValueError('Required property \'name\' not present in VaultDedicatedInstancePlan JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a VaultDedicatedInstancePlan object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this VaultDedicatedInstancePlan object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'VaultDedicatedInstancePlan') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'VaultDedicatedInstancePlan') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-    class NameEnum(str, Enum):
-        """
-        The plan name of this instance.
-        """
-
-        TRIAL = 'trial'
-        STANDARD = 'standard'
-        DEDICATED = 'dedicated'
-
