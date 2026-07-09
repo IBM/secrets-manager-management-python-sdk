@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+# (C) Copyright IBM Corp. 2026.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""
+Integration Tests for SecretsManagerControlPlaneV2
+"""
+
+from ibm_cloud_sdk_core import *
+import os
+import pytest
+from ibm_cloud.secrets_manager_control_plane_v2 import *
+
+# Config file name
+config_file = 'secrets_manager_control_plane_v2.env'
+
+
+class TestSecretsManagerControlPlaneV2:
+    """
+    Integration Test Class for SecretsManagerControlPlaneV2
+    """
+
+    @classmethod
+    def setup_class(cls):
+        if os.path.exists(config_file):
+            os.environ['IBM_CREDENTIALS_FILE'] = config_file
+
+            cls.secrets_manager_control_plane_service = SecretsManagerControlPlaneV2.new_instance(
+            )
+            assert cls.secrets_manager_control_plane_service is not None
+
+            cls.config = read_external_sources(SecretsManagerControlPlaneV2.DEFAULT_SERVICE_NAME)
+            assert cls.config is not None
+
+            cls.secrets_manager_control_plane_service.enable_retries()
+
+        print('Setup complete.')
+
+    needscredentials = pytest.mark.skipif(
+        not os.path.exists(config_file), reason="External configuration not available, skipping..."
+    )
+
+    @needscredentials
+    def test_create_vault_admintoken(self):
+        response = self.secrets_manager_control_plane_service.create_vault_admintoken(
+            instance_id='testString',
+        )
+
+        assert response.get_status_code() == 201
+        token = response.get_result()
+        assert token is not None
+
+    @needscredentials
+    def test_get_service_instance_endpoints(self):
+        response = self.secrets_manager_control_plane_service.get_service_instance_endpoints(
+            instance_id='testString',
+        )
+
+        assert response.get_status_code() == 200
+        endpoints = response.get_result()
+        assert endpoints is not None
+
+    @needscredentials
+    def test_get_service_instance_details(self):
+        response = self.secrets_manager_control_plane_service.get_service_instance_details(
+            instance_id='testString',
+        )
+
+        assert response.get_status_code() == 200
+        instance = response.get_result()
+        assert instance is not None
+
+    @needscredentials
+    def test_delete_api_instance_admintokens(self):
+        response = self.secrets_manager_control_plane_service.delete_api_instance_admintokens(
+            instance_id='testString',
+        )
+
+        assert response.get_status_code() == 204

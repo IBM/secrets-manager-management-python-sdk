@@ -1,0 +1,77 @@
+[project]
+name = "ibm-secrets-manager-management-sdk"
+version = "0.0.1"
+authors = [
+    { name="IBM", email="secrets.automation@ibm.com" }
+]
+description = "IBM Cloud Secrets Manager instance management Python SDK"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+keywords = ["ibm", "cloud", "secrets manager", "instance management", "control plane", "ibm cloud services"]
+dependencies = [
+    "requests>=2.32.4,<3.0.0",
+    "urllib3>=2.6.3,<3.0.0",
+    "python-dateutil>=2.5.3,<3.0.0",
+    "ibm-cloud-sdk-core>=3.24.4,<4.0.0",
+]
+
+[project.urls]
+Repository = "https://github.com/IBM/secrets-manager-management-python-sdk"
+Documentation = "https://cloud.ibm.com/apidocs/secrets-manager"
+Issues = "https://github.com/IBM/secrets-manager-management-python-sdk/issues"
+
+[project.optional-dependencies]
+dev = [
+    "coverage>=7.3.2,<8.0.0",
+    "pylint>=4.0.5,<4.1.0",
+    "pytest>=9.0.2,<9.1.0",
+    "pytest-cov>=7.1.0,<7.2.0",
+    "pytest-rerunfailures>=3.1",
+    "responses>=0.23.3,<1.0.0",
+    "black>=26.3.1,<26.3.2",
+    "python-dotenv>=0.19.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatchling.build.targets.wheel]
+packages = ["ibm_cloud", "ibm_secrets_manager_sdk_instance_management"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["ibm_cloud", "ibm_secrets_manager_sdk_instance_management"]
+
+[tool.black]
+line-length = 120
+skip-string-normalization = true
+
+[tool.bumpversion]
+current_version = "0.0.1"
+commit = true
+message = "Update version {current_version} -> {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "ibm_cloud/version.py"
+search = "__version__ = '{current_version}'"
+replace = "__version__ = '{new_version}'"
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = "version = \"{current_version}\""
+replace = "version = \"{new_version}\""
