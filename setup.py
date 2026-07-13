@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ibm-secrets-manager-management-sdk',
-    version='0.0.1',
+    version='2.0.0',
     description='IBM Cloud Secrets Manager instance management Python SDK',
     author='IBM',
     packages=find_packages(exclude=['test', 'test.*']),
