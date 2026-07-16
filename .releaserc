@@ -42,7 +42,7 @@
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
         "assets": [
           "pyproject.toml",
-          "ibm_cloud/version.py"
+          "ibm_secrets_manager_sdk_instance_management/version.py"
         ]
       }
     ],
