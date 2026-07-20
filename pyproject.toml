@@ -1,6 +1,6 @@
 [project]
 name = "ibm-secrets-manager-instance-management"
-version = "0.0.1"
+version = "2.0.0"
 authors = [
     { name="IBM", email="secrets.automation@ibm.com" }
 ]
@@ -52,22 +52,22 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatchling.build.targets.wheel]
-packages = ["ibm_cloud", "ibm_secrets_manager_sdk_instance_management"]
+packages = ["ibm_secrets_manager_sdk_instance_management"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["ibm_cloud", "ibm_secrets_manager_sdk_instance_management"]
+packages = ["ibm_secrets_manager_sdk_instance_management"]
 
 [tool.black]
 line-length = 120
 skip-string-normalization = true
 
 [tool.bumpversion]
-current_version = "0.0.1"
+current_version = "2.0.0"
 commit = true
 message = "Update version {current_version} -> {new_version}"
 
 [[tool.bumpversion.files]]
-filename = "ibm_cloud/version.py"
+filename = "ibm_secrets_manager_sdk_instance_management/version.py"
 search = "__version__ = '{current_version}'"
 replace = "__version__ = '{new_version}'"
 
