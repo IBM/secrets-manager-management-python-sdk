@@ -1,6 +1,6 @@
 [project]
 name = "ibm-secrets-manager-instance-management-sdk"
-version = "2.0.0"
+version = "2.0.1"
 authors = [
     { name="IBM", email="secrets.automation@ibm.com" }
 ]
@@ -62,7 +62,7 @@ line-length = 120
 skip-string-normalization = true
 
 [tool.bumpversion]
-current_version = "2.0.0"
+current_version = "2.0.1"
 commit = true
 message = "Update version {current_version} -> {new_version}"
 
