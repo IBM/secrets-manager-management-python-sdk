@@ -86,7 +86,7 @@ class TestSecretsManagerInstanceManagementV2Examples:
             # begin-create_vault_admintoken
 
             response = secrets_manager_instance_management_service.create_vault_admintoken(
-                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+                id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
             )
             token = response.get_result()
 
@@ -108,13 +108,91 @@ class TestSecretsManagerInstanceManagementV2Examples:
             # begin-get_instance
 
             response = secrets_manager_instance_management_service.get_instance(
-                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+                id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
             )
             instance = response.get_result()
 
             print(json.dumps(instance, indent=2))
 
             # end-get_instance
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_instance_destinations_example(self):
+        """
+        list_instance_destinations request example
+        """
+        try:
+            print('\nlist_instance_destinations() result:')
+
+            # begin-list_instance_destinations
+
+            response = secrets_manager_instance_management_service.list_instance_destinations(
+                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+            )
+            destination_collection = response.get_result()
+
+            print(json.dumps(destination_collection, indent=2))
+
+            # end-list_instance_destinations
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_instance_destination_example(self):
+        """
+        create_instance_destination request example
+        """
+        try:
+            # begin-create_instance_destination
+
+            response = secrets_manager_instance_management_service.create_instance_destination(
+                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+            )
+
+            # end-create_instance_destination
+            print('\ncreate_instance_destination() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_instance_destination_example(self):
+        """
+        get_instance_destination request example
+        """
+        try:
+            # begin-get_instance_destination
+
+            response = secrets_manager_instance_management_service.get_instance_destination(
+                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+                destination_id='b2c3d4e5-f6a7-8901-bcde-f12345678901',
+            )
+
+            # end-get_instance_destination
+            print('\nget_instance_destination() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_instance_destination_example(self):
+        """
+        update_instance_destination request example
+        """
+        try:
+            # begin-update_instance_destination
+
+            response = secrets_manager_instance_management_service.update_instance_destination(
+                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+                destination_id='b2c3d4e5-f6a7-8901-bcde-f12345678901',
+            )
+
+            # end-update_instance_destination
+            print('\nupdate_instance_destination() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -128,11 +206,30 @@ class TestSecretsManagerInstanceManagementV2Examples:
             # begin-delete_instance_admintokens
 
             response = secrets_manager_instance_management_service.delete_instance_admintokens(
-                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+                id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
             )
 
             # end-delete_instance_admintokens
             print('\ndelete_instance_admintokens() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_instance_destination_example(self):
+        """
+        delete_instance_destination request example
+        """
+        try:
+            # begin-delete_instance_destination
+
+            response = secrets_manager_instance_management_service.delete_instance_destination(
+                instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+                destination_id='b2c3d4e5-f6a7-8901-bcde-f12345678901',
+            )
+
+            # end-delete_instance_destination
+            print('\ndelete_instance_destination() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
