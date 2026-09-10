@@ -131,4 +131,4 @@ dmypy.json
 .openapi-generator-ignore
 .openapi-generator
 
-node_modules
+node_modules*.env
