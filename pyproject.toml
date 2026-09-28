@@ -63,7 +63,8 @@ skip-string-normalization = true
 
 [tool.bumpversion]
 current_version = "2.0.3"
-commit = true
+commit = false
+tag = false
 message = "Update version {current_version} -> {new_version}"
 
 [[tool.bumpversion.files]]
