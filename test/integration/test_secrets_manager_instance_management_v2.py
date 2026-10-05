@@ -55,6 +55,7 @@ class TestSecretsManagerInstanceManagementV2:
     def test_create_vault_admintoken(self):
         response = self.secrets_manager_instance_management_service.create_vault_admintoken(
             id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+            response_wrapping=True,
         )
 
         assert response.get_status_code() == 201
@@ -84,11 +85,22 @@ class TestSecretsManagerInstanceManagementV2:
 
     @needscredentials
     def test_create_instance_destination(self):
+        # Construct a dict representation of a CreateDestinationRequestIbmCloudDatabaseDestinationPrototype model
+        create_destination_request_model = {
+            'name': 'my-postgres',
+            'type': 'ibm_cloud_database',
+            'description': 'Production PostgreSQL database',
+            'crn': 'crn:v1:bluemix:public:databases-for-postgresql:us-south:a/e91c8f42b3d74e1a9c2f05d8b67a3e10:3f8b1c7a-9d42-4e6f-b8a5-2c1d9e7f4b83::',
+        }
+
         response = self.secrets_manager_instance_management_service.create_instance_destination(
             instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+            destination_prototype=create_destination_request_model,
         )
 
-        assert response.get_status_code() == 201
+        assert response.get_status_code() == 202
+        ibm_cloud_database_destination = response.get_result()
+        assert ibm_cloud_database_destination is not None
 
     @needscredentials
     def test_get_instance_destination(self):
@@ -98,22 +110,26 @@ class TestSecretsManagerInstanceManagementV2:
         )
 
         assert response.get_status_code() == 200
+        ibm_cloud_database_destination = response.get_result()
+        assert ibm_cloud_database_destination is not None
 
     @needscredentials
     def test_update_instance_destination(self):
-        # Construct a dict representation of a InlineObject model
-        inline_object_model = {
-            'name': 'production-postgres-db',
-            'description': 'Updated description for production database',
+        # Construct a dict representation of a DestinationPatch model
+        destination_patch_model = {
+            'name': 'my-postgres-updated',
+            'description': 'Production PostgreSQL database',
         }
 
         response = self.secrets_manager_instance_management_service.update_instance_destination(
             instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
             destination_id='b2c3d4e5-f6a7-8901-bcde-f12345678901',
-            inline_object=inline_object_model,
+            destination_patch=destination_patch_model,
         )
 
         assert response.get_status_code() == 200
+        ibm_cloud_database_destination = response.get_result()
+        assert ibm_cloud_database_destination is not None
 
     @needscredentials
     def test_delete_instance_admintokens(self):
@@ -130,4 +146,6 @@ class TestSecretsManagerInstanceManagementV2:
             destination_id='b2c3d4e5-f6a7-8901-bcde-f12345678901',
         )
 
-        assert response.get_status_code() == 204
+        assert response.get_status_code() == 202
+        ibm_cloud_database_destination = response.get_result()
+        assert ibm_cloud_database_destination is not None

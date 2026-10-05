@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.116.0-df613dbc-20260803-154903
+# IBM OpenAPI SDK Code Generator Version: 3.117.1-c28a0a4f-20260924-094841
 
 """
 Use the IBM  Cloud® Secrets Manager Instance Management API to manage service instances of
@@ -112,6 +112,8 @@ class SecretsManagerInstanceManagementV2(BaseService):
     def create_vault_admintoken(
         self,
         id: str,
+        *,
+        response_wrapping: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -119,9 +121,14 @@ class SecretsManagerInstanceManagementV2(BaseService):
 
         Generate a Vault admin token for authenticating to your Vault Dedicated cluster.
         The token is valid for 1 hour and grants administrative privileges. Use only for
-        initial setup and cluster management, then revoke immediately.
+        initial setup and cluster management, then revoke immediately. Optionally, set
+        response_wrapping to true in the request body to receive a Vault response-wrapped
+        token instead of a plain admin token.
 
         :param str id: Secrets Manager instance ID.
+        :param bool response_wrapping: (optional) If true, returns a Vault
+               response-wrapped token (wrapped_token). If false or absent, returns a plain
+               admin token (token).
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Token` object
@@ -137,6 +144,13 @@ class SecretsManagerInstanceManagementV2(BaseService):
         )
         headers.update(sdk_headers)
 
+        data = {
+            'response_wrapping': response_wrapping,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
             del kwargs['headers']
@@ -150,6 +164,7 @@ class SecretsManagerInstanceManagementV2(BaseService):
             method='POST',
             url=url,
             headers=headers,
+            data=data,
         )
 
         response = self.send(request, **kwargs)
@@ -307,7 +322,7 @@ class SecretsManagerInstanceManagementV2(BaseService):
     def create_instance_destination(
         self,
         instance_id: str,
-        destination_prototype: 'CreateInstanceDestinationRequest',
+        destination_prototype: 'CreateDestinationRequest',
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -315,7 +330,7 @@ class SecretsManagerInstanceManagementV2(BaseService):
 
         Create a new destination between your Vault Dedicated cluster and an IBM Cloud
         service instance.
-        Returns `202 Accepted` with `state: not_started`. Provisioning completes
+        Returns `202 Accepted` with `state: provisioning`. Provisioning completes
         asynchronously — poll `GET /destinations/{id}` until `state` transitions to
         `succeeded` or `failed`.
         **Beta**: Only Gen 1 (Classic) IBM Cloud Database service instances are supported.
@@ -325,15 +340,17 @@ class SecretsManagerInstanceManagementV2(BaseService):
         **Quota**: Maximum 20 destinations per instance.
 
         :param str instance_id: Secrets Manager instance ID.
-        :param CreateInstanceDestinationRequest destination_prototype:
+        :param CreateDestinationRequest destination_prototype:
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
+        :rtype: DetailedResponse with `dict` result representing a `IbmCloudDatabaseDestination` object
         """
 
         if not instance_id:
             raise ValueError('instance_id must be provided')
-        if isinstance(destination_prototype, CreateInstanceDestinationRequest):
+        if destination_prototype is None:
+            raise ValueError('destination_prototype must be provided')
+        if isinstance(destination_prototype, CreateDestinationRequest):
             destination_prototype = convert_model(destination_prototype)
         headers = {}
         sdk_headers = get_sdk_headers(
@@ -343,10 +360,7 @@ class SecretsManagerInstanceManagementV2(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = {
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
+        data = json.dumps(destination_prototype)
         headers['content-type'] = 'application/json'
 
         if 'headers' in kwargs:
@@ -379,15 +393,14 @@ class SecretsManagerInstanceManagementV2(BaseService):
 
         Retrieve details and current state for a specific destination for your Vault
         Dedicated cluster.
-        Returns `404` if the destination does not exist. A deleted destination is
-        immediately absent from GET — the `deleting` state is internal only and never
-        returned to callers.
+        Returns `404` if the destination does not exist. A destination undergoing deletion
+        may appear with a `deleting` state before it is fully removed.
 
         :param str instance_id: Secrets Manager instance ID.
         :param str destination_id: Destination ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
+        :rtype: DetailedResponse with `dict` result representing a `IbmCloudDatabaseDestination` object
         """
 
         if not instance_id:
@@ -424,8 +437,7 @@ class SecretsManagerInstanceManagementV2(BaseService):
         self,
         instance_id: str,
         destination_id: str,
-        *,
-        inline_object: Optional['InlineObject'] = None,
+        destination_patch: 'DestinationPatch',
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -436,18 +448,20 @@ class SecretsManagerInstanceManagementV2(BaseService):
 
         :param str instance_id: Secrets Manager instance ID.
         :param str destination_id: Destination ID.
-        :param InlineObject inline_object: (optional)
+        :param DestinationPatch destination_patch:
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
+        :rtype: DetailedResponse with `dict` result representing a `IbmCloudDatabaseDestination` object
         """
 
         if not instance_id:
             raise ValueError('instance_id must be provided')
         if not destination_id:
             raise ValueError('destination_id must be provided')
-        if inline_object is not None and isinstance(inline_object, InlineObject):
-            inline_object = convert_model(inline_object)
+        if destination_patch is None:
+            raise ValueError('destination_patch must be provided')
+        if isinstance(destination_patch, DestinationPatch):
+            destination_patch = convert_model(destination_patch)
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -456,7 +470,7 @@ class SecretsManagerInstanceManagementV2(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = json.dumps(inline_object)
+        data = json.dumps(destination_patch)
         headers['content-type'] = 'application/merge-patch+json'
 
         if 'headers' in kwargs:
@@ -487,8 +501,9 @@ class SecretsManagerInstanceManagementV2(BaseService):
         """
         Delete destination.
 
-        Delete a destination for your Vault Dedicated cluster. A deleted destination is
-        immediately absent from GET after this call returns 204.
+        Delete a destination for your Vault Dedicated cluster. Returns `202 Accepted` and
+        begins deletion asynchronously — the destination is removed from `GET
+        /destinations` once deletion completes.
         A `failed` destination still counts against the per-instance quota until deleted.
         **Rate Limit**: 10 requests per instance per minute.
 
@@ -496,7 +511,7 @@ class SecretsManagerInstanceManagementV2(BaseService):
         :param str destination_id: Destination ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
+        :rtype: DetailedResponse with `dict` result representing a `IbmCloudDatabaseDestination` object
         """
 
         if not instance_id:
@@ -514,6 +529,7 @@ class SecretsManagerInstanceManagementV2(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
             del kwargs['headers']
+        headers['Accept'] = 'application/json'
 
         path_param_keys = ['instance_id', 'destination_id']
         path_param_values = self.encode_path_vars(instance_id, destination_id)
@@ -543,6 +559,7 @@ class ListInstanceDestinationsEnums:
         PROVISIONING = 'provisioning'
         SUCCEEDED = 'succeeded'
         FAILED = 'failed'
+        DELETING = 'deleting'
 
 
 ##############################################################################
@@ -612,15 +629,18 @@ class Destination:
     :param str type: Destination type.
     :param str description: (optional) Optional description.
     :param str state: Destination state:
-          - `not_started`: Job accepted, waiting to start provisioning
+          - `not_started`: Initial state before the first provisioning attempt begins
           - `provisioning`: Provisioning in progress — poll until `succeeded` or `failed`
           - `succeeded`: Destination ready and usable
-          - `failed`: Provisioning failed — terminal state; delete and recreate.
-            A `failed` destination still counts against the per-instance quota until
-          deleted.
+          - `failed`: Terminal state reached when provisioning or deletion fails. A
+          `failed` destination still counts against the per-instance quota until deleted.
+          - `deleting`: Deletion in progress.
     :param datetime created_at: Timestamp when the destination was created.
     :param datetime updated_at: Timestamp when the destination was last updated.
     :param str created_by: (optional) IAM identity that created the destination.
+    :param str message: (optional) Human-readable message providing additional
+          context about the current state. Present only when non-empty — set when `state`
+          is `failed`, describing why provisioning or deletion failed.
     """
 
     def __init__(
@@ -635,6 +655,7 @@ class Destination:
         href: Optional[str] = None,
         description: Optional[str] = None,
         created_by: Optional[str] = None,
+        message: Optional[str] = None,
     ) -> None:
         """
         Initialize a Destination object.
@@ -643,13 +664,14 @@ class Destination:
         :param str name: Destination name.
         :param str type: Destination type.
         :param str state: Destination state:
-               - `not_started`: Job accepted, waiting to start provisioning
+               - `not_started`: Initial state before the first provisioning attempt begins
                - `provisioning`: Provisioning in progress — poll until `succeeded` or
                `failed`
                - `succeeded`: Destination ready and usable
-               - `failed`: Provisioning failed — terminal state; delete and recreate.
-                 A `failed` destination still counts against the per-instance quota until
+               - `failed`: Terminal state reached when provisioning or deletion fails. A
+               `failed` destination still counts against the per-instance quota until
                deleted.
+               - `deleting`: Deletion in progress.
         :param datetime created_at: Timestamp when the destination was created.
         :param datetime updated_at: Timestamp when the destination was last
                updated.
@@ -664,13 +686,11 @@ class Destination:
         self.created_at = created_at
         self.updated_at = updated_at
         self.created_by = created_by
+        self.message = message
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Destination':
         """Initialize a Destination object from a json dictionary."""
-        disc_class = cls._get_class_by_discriminator(_dict)
-        if disc_class != cls:
-            return disc_class.from_dict(_dict)
         args = {}
         if (id := _dict.get('id')) is not None:
             args['id'] = id
@@ -702,6 +722,8 @@ class Destination:
             raise ValueError('Required property \'updated_at\' not present in Destination JSON')
         if (created_by := _dict.get('created_by')) is not None:
             args['created_by'] = created_by
+        if (message := _dict.get('message')) is not None:
+            args['message'] = message
         return cls(**args)
 
     @classmethod
@@ -730,6 +752,8 @@ class Destination:
             _dict['updated_at'] = datetime_to_string(self.updated_at)
         if hasattr(self, 'created_by') and getattr(self, 'created_by') is not None:
             _dict['created_by'] = getattr(self, 'created_by')
+        if hasattr(self, 'message') and getattr(self, 'message') is not None:
+            _dict['message'] = getattr(self, 'message')
         return _dict
 
     def _to_dict(self):
@@ -750,22 +774,6 @@ class Destination:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-    @classmethod
-    def _get_class_by_discriminator(cls, _dict: Dict) -> object:
-        mapping = {}
-        mapping['ibm_cloud_database'] = 'IbmCloudDatabaseDestination'
-        disc_value = _dict.get('type')
-        if disc_value is None:
-            raise ValueError('Discriminator property \'type\' not found in Destination JSON')
-        class_name = mapping.get(disc_value, disc_value)
-        try:
-            disc_class = getattr(sys.modules[__name__], class_name)
-        except AttributeError:
-            disc_class = cls
-        if isinstance(disc_class, object):
-            return disc_class
-        raise TypeError('%s is not a discriminator class' % class_name)
-
     class TypeEnum(str, Enum):
         """
         Destination type.
@@ -777,18 +785,19 @@ class Destination:
     class StateEnum(str, Enum):
         """
         Destination state:
-        - `not_started`: Job accepted, waiting to start provisioning
+        - `not_started`: Initial state before the first provisioning attempt begins
         - `provisioning`: Provisioning in progress — poll until `succeeded` or `failed`
         - `succeeded`: Destination ready and usable
-        - `failed`: Provisioning failed — terminal state; delete and recreate.
-          A `failed` destination still counts against the per-instance quota until
-        deleted.
+        - `failed`: Terminal state reached when provisioning or deletion fails. A `failed`
+        destination still counts against the per-instance quota until deleted.
+        - `deleting`: Deletion in progress.
         """
 
         NOT_STARTED = 'not_started'
         PROVISIONING = 'provisioning'
         SUCCEEDED = 'succeeded'
         FAILED = 'failed'
+        DELETING = 'deleting'
 
 
 
@@ -865,6 +874,265 @@ class DestinationCollection:
     def __ne__(self, other: 'DestinationCollection') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class DestinationPatch:
+    """
+    Fields to update on a destination. At least one field must be provided.
+
+    :param str name: (optional) Updated name.
+    :param str description: (optional) Updated description.
+    """
+
+    def __init__(
+        self,
+        *,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a DestinationPatch object.
+
+        :param str name: (optional) Updated name.
+        :param str description: (optional) Updated description.
+        """
+        self.name = name
+        self.description = description
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationPatch':
+        """Initialize a DestinationPatch object from a json dictionary."""
+        args = {}
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationPatch object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationPatch object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationPatch') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationPatch') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IbmCloudDatabaseDestination:
+    """
+    A destination resource representing a private network link to an IBM Cloud Database
+    service instance on a Vault Dedicated cluster.
+
+    :param str id: Destination ID.
+    :param str href: (optional) The URL of the destination resource.
+    :param str name: Destination name.
+    :param str type: Destination type.
+    :param str description: (optional) Optional description.
+    :param str state: Destination state:
+          - `not_started`: Initial state before the first provisioning attempt begins
+          - `provisioning`: Provisioning in progress — poll until `succeeded` or `failed`
+          - `succeeded`: Destination ready and usable
+          - `failed`: Terminal state reached when provisioning or deletion fails. A
+          `failed` destination still counts against the per-instance quota until deleted.
+          - `deleting`: Deletion in progress.
+    :param datetime created_at: Timestamp when the destination was created.
+    :param datetime updated_at: Timestamp when the destination was last updated.
+    :param str created_by: (optional) IAM identity that created the destination.
+    :param str message: (optional) Human-readable message providing additional
+          context about the current state. Present only when non-empty — set when `state`
+          is `failed`, describing why provisioning or deletion failed.
+    :param str crn: IBM Cloud Database service instance CRN.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        type: str,
+        state: str,
+        created_at: datetime,
+        updated_at: datetime,
+        crn: str,
+        *,
+        href: Optional[str] = None,
+        description: Optional[str] = None,
+        created_by: Optional[str] = None,
+        message: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a IbmCloudDatabaseDestination object.
+
+        :param str id: Destination ID.
+        :param str name: Destination name.
+        :param str type: Destination type.
+        :param str state: Destination state:
+               - `not_started`: Initial state before the first provisioning attempt begins
+               - `provisioning`: Provisioning in progress — poll until `succeeded` or
+               `failed`
+               - `succeeded`: Destination ready and usable
+               - `failed`: Terminal state reached when provisioning or deletion fails. A
+               `failed` destination still counts against the per-instance quota until
+               deleted.
+               - `deleting`: Deletion in progress.
+        :param datetime created_at: Timestamp when the destination was created.
+        :param datetime updated_at: Timestamp when the destination was last
+               updated.
+        :param str crn: IBM Cloud Database service instance CRN.
+        :param str description: (optional) Optional description.
+        """
+        self.id = id
+        self.href = href
+        self.name = name
+        self.type = type
+        self.description = description
+        self.state = state
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.created_by = created_by
+        self.message = message
+        self.crn = crn
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IbmCloudDatabaseDestination':
+        """Initialize a IbmCloudDatabaseDestination object from a json dictionary."""
+        args = {}
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        else:
+            raise ValueError('Required property \'id\' not present in IbmCloudDatabaseDestination JSON')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        else:
+            raise ValueError('Required property \'name\' not present in IbmCloudDatabaseDestination JSON')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        else:
+            raise ValueError('Required property \'type\' not present in IbmCloudDatabaseDestination JSON')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        else:
+            raise ValueError('Required property \'state\' not present in IbmCloudDatabaseDestination JSON')
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        else:
+            raise ValueError('Required property \'created_at\' not present in IbmCloudDatabaseDestination JSON')
+        if (updated_at := _dict.get('updated_at')) is not None:
+            args['updated_at'] = string_to_datetime(updated_at)
+        else:
+            raise ValueError('Required property \'updated_at\' not present in IbmCloudDatabaseDestination JSON')
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
+        if (message := _dict.get('message')) is not None:
+            args['message'] = message
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        else:
+            raise ValueError('Required property \'crn\' not present in IbmCloudDatabaseDestination JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IbmCloudDatabaseDestination object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
+        if hasattr(self, 'created_by') and getattr(self, 'created_by') is not None:
+            _dict['created_by'] = getattr(self, 'created_by')
+        if hasattr(self, 'message') and getattr(self, 'message') is not None:
+            _dict['message'] = getattr(self, 'message')
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IbmCloudDatabaseDestination object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IbmCloudDatabaseDestination') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IbmCloudDatabaseDestination') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        Destination type.
+        """
+
+        IBM_CLOUD_DATABASE = 'ibm_cloud_database'
+
+
+    class StateEnum(str, Enum):
+        """
+        Destination state:
+        - `not_started`: Initial state before the first provisioning attempt begins
+        - `provisioning`: Provisioning in progress — poll until `succeeded` or `failed`
+        - `succeeded`: Destination ready and usable
+        - `failed`: Terminal state reached when provisioning or deletion fails. A `failed`
+        destination still counts against the per-instance quota until deleted.
+        - `deleting`: Deletion in progress.
+        """
+
+        NOT_STARTED = 'not_started'
+        PROVISIONING = 'provisioning'
+        SUCCEEDED = 'succeeded'
+        FAILED = 'failed'
+        DELETING = 'deleting'
+
 
 
 class Instance:
@@ -1019,61 +1287,22 @@ class Instance:
 
 class Token:
     """
-    Admin Token response.
+    Admin token response. Exactly one of token or wrapped_token is present, never both.
+    wrapped_token is returned only when response_wrapping: true is requested.
 
-    :param str token: The token value.
     """
 
     def __init__(
         self,
-        token: str,
     ) -> None:
         """
         Initialize a Token object.
 
-        :param str token: The token value.
         """
-        self.token = token
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'Token':
-        """Initialize a Token object from a json dictionary."""
-        args = {}
-        if (token := _dict.get('token')) is not None:
-            args['token'] = token
-        else:
-            raise ValueError('Required property \'token\' not present in Token JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a Token object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'token') and self.token is not None:
-            _dict['token'] = self.token
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this Token object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'Token') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'Token') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
+        msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
+            ", ".join(['TokenPlainAdminToken', 'TokenWrappedAdminToken'])
+        )
+        raise Exception(msg)
 
 
 class VaultDedicatedCluster:
@@ -1401,72 +1630,6 @@ class VaultDedicatedInstanceEndpoints:
         return not self == other
 
 
-class InlineObject:
-    """
-    Fields to update on a destination. At least one field must be provided.
-
-    :param str name: (optional) Updated name (must remain unique per instance).
-    :param str description: (optional) Updated description.
-    """
-
-    def __init__(
-        self,
-        *,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-    ) -> None:
-        """
-        Initialize a InlineObject object.
-
-        :param str name: (optional) Updated name (must remain unique per instance).
-        :param str description: (optional) Updated description.
-        """
-        self.name = name
-        self.description = description
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'InlineObject':
-        """Initialize a InlineObject object from a json dictionary."""
-        args = {}
-        if (name := _dict.get('name')) is not None:
-            args['name'] = name
-        if (description := _dict.get('description')) is not None:
-            args['description'] = description
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a InlineObject object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'description') and self.description is not None:
-            _dict['description'] = self.description
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this InlineObject object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'InlineObject') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'InlineObject') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
 class CreateDestinationRequestIbmCloudDatabaseDestinationPrototype(CreateDestinationRequest):
     """
     Request body for creating an IBM Cloud Database destination.
@@ -1564,35 +1727,45 @@ class CreateDestinationRequestIbmCloudDatabaseDestinationPrototype(CreateDestina
 
 
 
-class CreateInstanceDestinationRequest(CreateDestinationRequest):
+class TokenPlainAdminToken(Token):
     """
-    CreateInstanceDestinationRequest.
+    Response containing a plain Vault admin token.
 
+    :param str token: The plain Vault admin token.
     """
 
     def __init__(
         self,
+        token: str,
     ) -> None:
         """
-        Initialize a CreateInstanceDestinationRequest object.
+        Initialize a TokenPlainAdminToken object.
 
+        :param str token: The plain Vault admin token.
         """
         # pylint: disable=super-init-not-called
+        self.token = token
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'CreateInstanceDestinationRequest':
-        """Initialize a CreateInstanceDestinationRequest object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'TokenPlainAdminToken':
+        """Initialize a TokenPlainAdminToken object from a json dictionary."""
         args = {}
+        if (token := _dict.get('token')) is not None:
+            args['token'] = token
+        else:
+            raise ValueError('Required property \'token\' not present in TokenPlainAdminToken JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a CreateInstanceDestinationRequest object from a json dictionary."""
+        """Initialize a TokenPlainAdminToken object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'token') and self.token is not None:
+            _dict['token'] = self.token
         return _dict
 
     def _to_dict(self):
@@ -1600,141 +1773,61 @@ class CreateInstanceDestinationRequest(CreateDestinationRequest):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this CreateInstanceDestinationRequest object."""
+        """Return a `str` version of this TokenPlainAdminToken object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'CreateInstanceDestinationRequest') -> bool:
+    def __eq__(self, other: 'TokenPlainAdminToken') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'CreateInstanceDestinationRequest') -> bool:
+    def __ne__(self, other: 'TokenPlainAdminToken') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class IbmCloudDatabaseDestination(Destination):
+class TokenWrappedAdminToken(Token):
     """
-    A destination resource representing a private network link to an IBM Cloud Database
-    service instance on a Vault Dedicated cluster.
+    Response containing a Vault response-wrapped token.
 
-    :param str crn: IBM Cloud Database service instance CRN.
+    :param str wrapped_token: A Vault response-wrapped token. Present only when
+          response_wrapping: true is requested.
     """
 
     def __init__(
         self,
-        id: str,
-        name: str,
-        type: str,
-        state: str,
-        created_at: datetime,
-        updated_at: datetime,
-        crn: str,
-        *,
-        href: Optional[str] = None,
-        description: Optional[str] = None,
-        created_by: Optional[str] = None,
+        wrapped_token: str,
     ) -> None:
         """
-        Initialize a IbmCloudDatabaseDestination object.
+        Initialize a TokenWrappedAdminToken object.
 
-        :param str id: Destination ID.
-        :param str name: Destination name.
-        :param str type: Destination type.
-        :param str state: Destination state:
-               - `not_started`: Job accepted, waiting to start provisioning
-               - `provisioning`: Provisioning in progress — poll until `succeeded` or
-               `failed`
-               - `succeeded`: Destination ready and usable
-               - `failed`: Provisioning failed — terminal state; delete and recreate.
-                 A `failed` destination still counts against the per-instance quota until
-               deleted.
-        :param datetime created_at: Timestamp when the destination was created.
-        :param datetime updated_at: Timestamp when the destination was last
-               updated.
-        :param str crn: IBM Cloud Database service instance CRN.
-        :param str description: (optional) Optional description.
+        :param str wrapped_token: A Vault response-wrapped token. Present only when
+               response_wrapping: true is requested.
         """
-        self.id = id
-        self.href = href
-        self.name = name
-        self.type = type
-        self.description = description
-        self.state = state
-        self.created_at = created_at
-        self.updated_at = updated_at
-        self.created_by = created_by
-        self.crn = crn
+        # pylint: disable=super-init-not-called
+        self.wrapped_token = wrapped_token
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'IbmCloudDatabaseDestination':
-        """Initialize a IbmCloudDatabaseDestination object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'TokenWrappedAdminToken':
+        """Initialize a TokenWrappedAdminToken object from a json dictionary."""
         args = {}
-        if (id := _dict.get('id')) is not None:
-            args['id'] = id
+        if (wrapped_token := _dict.get('wrapped_token')) is not None:
+            args['wrapped_token'] = wrapped_token
         else:
-            raise ValueError('Required property \'id\' not present in IbmCloudDatabaseDestination JSON')
-        if (href := _dict.get('href')) is not None:
-            args['href'] = href
-        if (name := _dict.get('name')) is not None:
-            args['name'] = name
-        else:
-            raise ValueError('Required property \'name\' not present in IbmCloudDatabaseDestination JSON')
-        if (type := _dict.get('type')) is not None:
-            args['type'] = type
-        else:
-            raise ValueError('Required property \'type\' not present in IbmCloudDatabaseDestination JSON')
-        if (description := _dict.get('description')) is not None:
-            args['description'] = description
-        if (state := _dict.get('state')) is not None:
-            args['state'] = state
-        else:
-            raise ValueError('Required property \'state\' not present in IbmCloudDatabaseDestination JSON')
-        if (created_at := _dict.get('created_at')) is not None:
-            args['created_at'] = string_to_datetime(created_at)
-        else:
-            raise ValueError('Required property \'created_at\' not present in IbmCloudDatabaseDestination JSON')
-        if (updated_at := _dict.get('updated_at')) is not None:
-            args['updated_at'] = string_to_datetime(updated_at)
-        else:
-            raise ValueError('Required property \'updated_at\' not present in IbmCloudDatabaseDestination JSON')
-        if (created_by := _dict.get('created_by')) is not None:
-            args['created_by'] = created_by
-        if (crn := _dict.get('crn')) is not None:
-            args['crn'] = crn
-        else:
-            raise ValueError('Required property \'crn\' not present in IbmCloudDatabaseDestination JSON')
+            raise ValueError('Required property \'wrapped_token\' not present in TokenWrappedAdminToken JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a IbmCloudDatabaseDestination object from a json dictionary."""
+        """Initialize a TokenWrappedAdminToken object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'href') and getattr(self, 'href') is not None:
-            _dict['href'] = getattr(self, 'href')
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'type') and self.type is not None:
-            _dict['type'] = self.type
-        if hasattr(self, 'description') and self.description is not None:
-            _dict['description'] = self.description
-        if hasattr(self, 'state') and self.state is not None:
-            _dict['state'] = self.state
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = datetime_to_string(self.created_at)
-        if hasattr(self, 'updated_at') and self.updated_at is not None:
-            _dict['updated_at'] = datetime_to_string(self.updated_at)
-        if hasattr(self, 'created_by') and getattr(self, 'created_by') is not None:
-            _dict['created_by'] = getattr(self, 'created_by')
-        if hasattr(self, 'crn') and self.crn is not None:
-            _dict['crn'] = self.crn
+        if hasattr(self, 'wrapped_token') and self.wrapped_token is not None:
+            _dict['wrapped_token'] = self.wrapped_token
         return _dict
 
     def _to_dict(self):
@@ -1742,40 +1835,15 @@ class IbmCloudDatabaseDestination(Destination):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this IbmCloudDatabaseDestination object."""
+        """Return a `str` version of this TokenWrappedAdminToken object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'IbmCloudDatabaseDestination') -> bool:
+    def __eq__(self, other: 'TokenWrappedAdminToken') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'IbmCloudDatabaseDestination') -> bool:
+    def __ne__(self, other: 'TokenWrappedAdminToken') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
-    class TypeEnum(str, Enum):
-        """
-        Destination type.
-        """
-
-        IBM_CLOUD_DATABASE = 'ibm_cloud_database'
-
-
-    class StateEnum(str, Enum):
-        """
-        Destination state:
-        - `not_started`: Job accepted, waiting to start provisioning
-        - `provisioning`: Provisioning in progress — poll until `succeeded` or `failed`
-        - `succeeded`: Destination ready and usable
-        - `failed`: Provisioning failed — terminal state; delete and recreate.
-          A `failed` destination still counts against the per-instance quota until
-        deleted.
-        """
-
-        NOT_STARTED = 'not_started'
-        PROVISIONING = 'provisioning'
-        SUCCEEDED = 'succeeded'
-        FAILED = 'failed'
-

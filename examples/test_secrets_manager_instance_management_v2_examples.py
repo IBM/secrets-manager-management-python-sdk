@@ -147,14 +147,26 @@ class TestSecretsManagerInstanceManagementV2Examples:
         create_instance_destination request example
         """
         try:
+            print('\ncreate_instance_destination() result:')
+
             # begin-create_instance_destination
+
+            create_destination_request_model = {
+                'name': 'my-postgres',
+                'type': 'ibm_cloud_database',
+                'description': 'Production PostgreSQL database',
+                'crn': 'crn:v1:bluemix:public:databases-for-postgresql:us-south:a/e91c8f42b3d74e1a9c2f05d8b67a3e10:3f8b1c7a-9d42-4e6f-b8a5-2c1d9e7f4b83::',
+            }
 
             response = secrets_manager_instance_management_service.create_instance_destination(
                 instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
+                destination_prototype=create_destination_request_model,
             )
+            ibm_cloud_database_destination = response.get_result()
+
+            print(json.dumps(ibm_cloud_database_destination, indent=2))
 
             # end-create_instance_destination
-            print('\ncreate_instance_destination() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -165,15 +177,19 @@ class TestSecretsManagerInstanceManagementV2Examples:
         get_instance_destination request example
         """
         try:
+            print('\nget_instance_destination() result:')
+
             # begin-get_instance_destination
 
             response = secrets_manager_instance_management_service.get_instance_destination(
                 instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
                 destination_id='b2c3d4e5-f6a7-8901-bcde-f12345678901',
             )
+            ibm_cloud_database_destination = response.get_result()
+
+            print(json.dumps(ibm_cloud_database_destination, indent=2))
 
             # end-get_instance_destination
-            print('\nget_instance_destination() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -184,15 +200,25 @@ class TestSecretsManagerInstanceManagementV2Examples:
         update_instance_destination request example
         """
         try:
+            print('\nupdate_instance_destination() result:')
+
             # begin-update_instance_destination
+
+            destination_patch_model = {
+                'name': 'my-postgres-updated',
+                'description': 'Production PostgreSQL database',
+            }
 
             response = secrets_manager_instance_management_service.update_instance_destination(
                 instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
                 destination_id='b2c3d4e5-f6a7-8901-bcde-f12345678901',
+                destination_patch=destination_patch_model,
             )
+            ibm_cloud_database_destination = response.get_result()
+
+            print(json.dumps(ibm_cloud_database_destination, indent=2))
 
             # end-update_instance_destination
-            print('\nupdate_instance_destination() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -221,15 +247,19 @@ class TestSecretsManagerInstanceManagementV2Examples:
         delete_instance_destination request example
         """
         try:
+            print('\ndelete_instance_destination() result:')
+
             # begin-delete_instance_destination
 
             response = secrets_manager_instance_management_service.delete_instance_destination(
                 instance_id='bfc50c2e-d66d-4f37-9ccf-9713f8325b39',
                 destination_id='b2c3d4e5-f6a7-8901-bcde-f12345678901',
             )
+            ibm_cloud_database_destination = response.get_result()
+
+            print(json.dumps(ibm_cloud_database_destination, indent=2))
 
             # end-delete_instance_destination
-            print('\ndelete_instance_destination() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
