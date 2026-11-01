@@ -110,8 +110,8 @@ class TestCreateVaultAdmintoken:
         create_vault_admintoken()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/admintokens')
-        mock_response = '{"token": "hvs.CAESIIG_PILmULFYOsEyWHxkZ2mF2a8V...example...p3ZnpWbDF1RUNjUkNTZEg"}'
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/admintokens')
+        mock_response = '{"token": "hvs.CAESIC202dQW-jogohoywlivU-AMllTdeNT0QBiob9OBmyfnGigKImh2cy5yUkxpcmVaZURzTmw5cgtevFoyelBpYkguYW82SlMQyr0Q"}'
         responses.add(
             responses.POST,
             url,
@@ -121,17 +121,22 @@ class TestCreateVaultAdmintoken:
         )
 
         # Set up parameter values
-        id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+        response_wrapping = True
 
         # Invoke method
         response = _service.create_vault_admintoken(
             id,
+            response_wrapping=response_wrapping,
             headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['response_wrapping'] == True
 
     def test_create_vault_admintoken_all_params_with_retries(self):
         # Enable retries and run test_create_vault_admintoken_all_params.
@@ -143,13 +148,13 @@ class TestCreateVaultAdmintoken:
         self.test_create_vault_admintoken_all_params()
 
     @responses.activate
-    def test_create_vault_admintoken_value_error(self):
+    def test_create_vault_admintoken_required_params(self):
         """
-        test_create_vault_admintoken_value_error()
+        test_create_vault_admintoken_required_params()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/admintokens')
-        mock_response = '{"token": "hvs.CAESIIG_PILmULFYOsEyWHxkZ2mF2a8V...example...p3ZnpWbDF1RUNjUkNTZEg"}'
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/admintokens')
+        mock_response = '{"token": "hvs.CAESIC202dQW-jogohoywlivU-AMllTdeNT0QBiob9OBmyfnGigKImh2cy5yUkxpcmVaZURzTmw5cgtevFoyelBpYkguYW82SlMQyr0Q"}'
         responses.add(
             responses.POST,
             url,
@@ -159,7 +164,45 @@ class TestCreateVaultAdmintoken:
         )
 
         # Set up parameter values
-        id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+
+        # Invoke method
+        response = _service.create_vault_admintoken(
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+
+    def test_create_vault_admintoken_required_params_with_retries(self):
+        # Enable retries and run test_create_vault_admintoken_required_params.
+        _service.enable_retries()
+        self.test_create_vault_admintoken_required_params()
+
+        # Disable retries and run test_create_vault_admintoken_required_params.
+        _service.disable_retries()
+        self.test_create_vault_admintoken_required_params()
+
+    @responses.activate
+    def test_create_vault_admintoken_value_error(self):
+        """
+        test_create_vault_admintoken_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/admintokens')
+        mock_response = '{"token": "hvs.CAESIC202dQW-jogohoywlivU-AMllTdeNT0QBiob9OBmyfnGigKImh2cy5yUkxpcmVaZURzTmw5cgtevFoyelBpYkguYW82SlMQyr0Q"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Set up parameter values
+        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -191,7 +234,7 @@ class TestDeleteInstanceAdmintokens:
         delete_instance_admintokens()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/admintokens')
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/admintokens')
         responses.add(
             responses.DELETE,
             url,
@@ -199,7 +242,7 @@ class TestDeleteInstanceAdmintokens:
         )
 
         # Set up parameter values
-        id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Invoke method
         response = _service.delete_instance_admintokens(
@@ -226,7 +269,7 @@ class TestDeleteInstanceAdmintokens:
         test_delete_instance_admintokens_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/admintokens')
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/admintokens')
         responses.add(
             responses.DELETE,
             url,
@@ -234,7 +277,7 @@ class TestDeleteInstanceAdmintokens:
         )
 
         # Set up parameter values
-        id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -305,8 +348,8 @@ class TestGetInstance:
         get_instance()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39')
-        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "name": "name", "instance_crn": "crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::", "plan": "dedicated", "vault_cluster": {"status": "healthy", "version": "1.21.2+ent.hsm"}, "endpoints": {"public": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}, "private": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}}, "encryption": {"mode": "service_managed", "provider": "key_protect", "key_crn": "crn:v1:bluemix:public:kms:us-south:a/791f5fb10986423e97aa8512f18b7e65:31639268-42e8-4420-9872-590a6ee20506:key:b4af8f76-e6ea-4dc5-89cc-5f1b9bb207cc"}, "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39"}'
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "name": "name", "instance_crn": "crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::", "plan": "dedicated", "vault_cluster": {"status": "healthy", "version": "1.21.2+ent.hsm"}, "endpoints": {"public": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}, "private": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}}, "encryption": {"mode": "service_managed", "provider": "key_protect", "key_crn": "crn:v1:bluemix:public:kms:us-south:a/791f5fb10986423e97aa8512f18b7e65:31639268-42e8-4420-9872-590a6ee20506:key:b4af8f76-e6ea-4dc5-89cc-5f1b9bb207cc"}, "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1"}'
         responses.add(
             responses.GET,
             url,
@@ -316,7 +359,7 @@ class TestGetInstance:
         )
 
         # Set up parameter values
-        id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Invoke method
         response = _service.get_instance(
@@ -343,8 +386,8 @@ class TestGetInstance:
         test_get_instance_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39')
-        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "name": "name", "instance_crn": "crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::", "plan": "dedicated", "vault_cluster": {"status": "healthy", "version": "1.21.2+ent.hsm"}, "endpoints": {"public": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}, "private": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}}, "encryption": {"mode": "service_managed", "provider": "key_protect", "key_crn": "crn:v1:bluemix:public:kms:us-south:a/791f5fb10986423e97aa8512f18b7e65:31639268-42e8-4420-9872-590a6ee20506:key:b4af8f76-e6ea-4dc5-89cc-5f1b9bb207cc"}, "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39"}'
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "name": "name", "instance_crn": "crn:v1:bluemix:public:secrets-manager:us-south:a/791f3fb10486421e97aa8512f18b7e65:b49ad24d-81d4-5ebc-b9b9-b0937d1c84d5::", "plan": "dedicated", "vault_cluster": {"status": "healthy", "version": "1.21.2+ent.hsm"}, "endpoints": {"public": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}, "private": {"vault_api": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud", "vault_ui": "https://f85f512b-e21b-4a9a-ac45-7bbc2f5cew2e.us-south.secrets-manager.appdomain.cloud/ui"}}, "encryption": {"mode": "service_managed", "provider": "key_protect", "key_crn": "crn:v1:bluemix:public:kms:us-south:a/791f5fb10986423e97aa8512f18b7e65:31639268-42e8-4420-9872-590a6ee20506:key:b4af8f76-e6ea-4dc5-89cc-5f1b9bb207cc"}, "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1"}'
         responses.add(
             responses.GET,
             url,
@@ -354,7 +397,7 @@ class TestGetInstance:
         )
 
         # Set up parameter values
-        id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -425,8 +468,8 @@ class TestListInstanceDestinations:
         list_instance_destinations()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations')
-        mock_response = '{"destinations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "crn": "crn"}], "total": 0}'
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations')
+        mock_response = '{"destinations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision"}], "total": 0}'
         responses.add(
             responses.GET,
             url,
@@ -436,7 +479,7 @@ class TestListInstanceDestinations:
         )
 
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
         state = 'not_started'
 
         # Invoke method
@@ -469,8 +512,8 @@ class TestListInstanceDestinations:
         test_list_instance_destinations_required_params()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations')
-        mock_response = '{"destinations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "crn": "crn"}], "total": 0}'
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations')
+        mock_response = '{"destinations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision"}], "total": 0}'
         responses.add(
             responses.GET,
             url,
@@ -480,7 +523,7 @@ class TestListInstanceDestinations:
         )
 
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Invoke method
         response = _service.list_instance_destinations(
@@ -507,8 +550,8 @@ class TestListInstanceDestinations:
         test_list_instance_destinations_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations')
-        mock_response = '{"destinations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "crn": "crn"}], "total": 0}'
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations')
+        mock_response = '{"destinations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision"}], "total": 0}'
         responses.add(
             responses.GET,
             url,
@@ -518,7 +561,7 @@ class TestListInstanceDestinations:
         )
 
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -550,27 +593,40 @@ class TestCreateInstanceDestination:
         create_instance_destination()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations')
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision", "crn": "crn"}'
         responses.add(
             responses.POST,
             url,
-            status=201,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
         )
 
+        # Construct a dict representation of a CreateDestinationRequestIbmCloudDatabaseDestinationPrototype model
+        create_destination_request_model = {}
+        create_destination_request_model['name'] = 'my-postgres'
+        create_destination_request_model['type'] = 'ibm_cloud_database'
+        create_destination_request_model['description'] = 'Production PostgreSQL database'
+        create_destination_request_model['crn'] = 'crn:v1:bluemix:public:databases-for-postgresql:us-south:a/e91c8f42b3d74e1a9c2f05d8b67a3e10:3f8b1c7a-9d42-4e6f-b8a5-2c1d9e7f4b83::'
+
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+        destination_prototype = create_destination_request_model
 
         # Invoke method
         response = _service.create_instance_destination(
             instance_id,
+            destination_prototype,
             headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 201
+        assert response.status_code == 202
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body == destination_prototype
 
     def test_create_instance_destination_all_params_with_retries(self):
         # Enable retries and run test_create_instance_destination_all_params.
@@ -587,19 +643,31 @@ class TestCreateInstanceDestination:
         test_create_instance_destination_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations')
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision", "crn": "crn"}'
         responses.add(
             responses.POST,
             url,
-            status=201,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
         )
 
+        # Construct a dict representation of a CreateDestinationRequestIbmCloudDatabaseDestinationPrototype model
+        create_destination_request_model = {}
+        create_destination_request_model['name'] = 'my-postgres'
+        create_destination_request_model['type'] = 'ibm_cloud_database'
+        create_destination_request_model['description'] = 'Production PostgreSQL database'
+        create_destination_request_model['crn'] = 'crn:v1:bluemix:public:databases-for-postgresql:us-south:a/e91c8f42b3d74e1a9c2f05d8b67a3e10:3f8b1c7a-9d42-4e6f-b8a5-2c1d9e7f4b83::'
+
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+        destination_prototype = create_destination_request_model
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
             "instance_id": instance_id,
+            "destination_prototype": destination_prototype,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
@@ -627,15 +695,18 @@ class TestGetInstanceDestination:
         get_instance_destination()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision", "crn": "crn"}'
         responses.add(
             responses.GET,
             url,
+            body=mock_response,
+            content_type='application/json',
             status=200,
         )
 
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
         destination_id = 'b2c3d4e5-f6a7-8901-bcde-f12345678901'
 
         # Invoke method
@@ -664,15 +735,18 @@ class TestGetInstanceDestination:
         test_get_instance_destination_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision", "crn": "crn"}'
         responses.add(
             responses.GET,
             url,
+            body=mock_response,
+            content_type='application/json',
             status=200,
         )
 
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
         destination_id = 'b2c3d4e5-f6a7-8901-bcde-f12345678901'
 
         # Pass in all but one required param and check for a ValueError
@@ -706,28 +780,31 @@ class TestUpdateInstanceDestination:
         update_instance_destination()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision", "crn": "crn"}'
         responses.add(
             responses.PATCH,
             url,
+            body=mock_response,
+            content_type='application/json',
             status=200,
         )
 
-        # Construct a dict representation of a InlineObject model
-        inline_object_model = {}
-        inline_object_model['name'] = 'production-postgres-db'
-        inline_object_model['description'] = 'Updated description for production database'
+        # Construct a dict representation of a DestinationPatch model
+        destination_patch_model = {}
+        destination_patch_model['name'] = 'my-postgres-updated'
+        destination_patch_model['description'] = 'Production PostgreSQL database'
 
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
         destination_id = 'b2c3d4e5-f6a7-8901-bcde-f12345678901'
-        inline_object = inline_object_model
+        destination_patch = destination_patch_model
 
         # Invoke method
         response = _service.update_instance_destination(
             instance_id,
             destination_id,
-            inline_object=inline_object,
+            destination_patch,
             headers={},
         )
 
@@ -736,7 +813,7 @@ class TestUpdateInstanceDestination:
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body == inline_object
+        assert req_body == destination_patch
 
     def test_update_instance_destination_all_params_with_retries(self):
         # Enable retries and run test_update_instance_destination_all_params.
@@ -748,63 +825,36 @@ class TestUpdateInstanceDestination:
         self.test_update_instance_destination_all_params()
 
     @responses.activate
-    def test_update_instance_destination_required_params(self):
-        """
-        test_update_instance_destination_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
-        responses.add(
-            responses.PATCH,
-            url,
-            status=200,
-        )
-
-        # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
-        destination_id = 'b2c3d4e5-f6a7-8901-bcde-f12345678901'
-
-        # Invoke method
-        response = _service.update_instance_destination(
-            instance_id,
-            destination_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_update_instance_destination_required_params_with_retries(self):
-        # Enable retries and run test_update_instance_destination_required_params.
-        _service.enable_retries()
-        self.test_update_instance_destination_required_params()
-
-        # Disable retries and run test_update_instance_destination_required_params.
-        _service.disable_retries()
-        self.test_update_instance_destination_required_params()
-
-    @responses.activate
     def test_update_instance_destination_value_error(self):
         """
         test_update_instance_destination_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision", "crn": "crn"}'
         responses.add(
             responses.PATCH,
             url,
+            body=mock_response,
+            content_type='application/json',
             status=200,
         )
 
+        # Construct a dict representation of a DestinationPatch model
+        destination_patch_model = {}
+        destination_patch_model['name'] = 'my-postgres-updated'
+        destination_patch_model['description'] = 'Production PostgreSQL database'
+
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
         destination_id = 'b2c3d4e5-f6a7-8901-bcde-f12345678901'
+        destination_patch = destination_patch_model
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
             "instance_id": instance_id,
             "destination_id": destination_id,
+            "destination_patch": destination_patch,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
@@ -832,15 +882,18 @@ class TestDeleteInstanceDestination:
         delete_instance_destination()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision", "crn": "crn"}'
         responses.add(
             responses.DELETE,
             url,
-            status=204,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
         )
 
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
         destination_id = 'b2c3d4e5-f6a7-8901-bcde-f12345678901'
 
         # Invoke method
@@ -852,7 +905,7 @@ class TestDeleteInstanceDestination:
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 204
+        assert response.status_code == 202
 
     def test_delete_instance_destination_all_params_with_retries(self):
         # Enable retries and run test_delete_instance_destination_all_params.
@@ -869,15 +922,18 @@ class TestDeleteInstanceDestination:
         test_delete_instance_destination_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v2/instances/bfc50c2e-d66d-4f37-9ccf-9713f8325b39/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/b2c3d4e5-f6a7-8901-bcde-f12345678901')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "href": "https://us-south.secrets-manager.cloud.ibm.com/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/destinations/ce8aa9a4-8cde-4b63-8156-d4a8b252beeb", "name": "name", "type": "ibm_cloud_database", "description": "description", "state": "not_started", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "message": "failed to provision", "crn": "crn"}'
         responses.add(
             responses.DELETE,
             url,
-            status=204,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
         )
 
         # Set up parameter values
-        instance_id = 'bfc50c2e-d66d-4f37-9ccf-9713f8325b39'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
         destination_id = 'b2c3d4e5-f6a7-8901-bcde-f12345678901'
 
         # Pass in all but one required param and check for a ValueError
@@ -936,9 +992,9 @@ class TestModel_Destination:
         destination_model = Destination.from_dict(destination_model_json)
         assert destination_model != False
 
-        # Construct a copy of the model instance by calling from_dict on the output of to_dict
-        destination_model_json2 = destination_model.to_dict()
-        destination_model2 = Destination.from_dict(destination_model_json2)
+        # Construct a model instance of Destination by calling from_dict on the json representation
+        destination_model_dict = Destination.from_dict(destination_model_json).__dict__
+        destination_model2 = Destination(**destination_model_dict)
 
         # Verify the model instances are equivalent
         assert destination_model == destination_model2
@@ -960,7 +1016,7 @@ class TestModel_DestinationCollection:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_model = {}  # IbmCloudDatabaseDestination
+        destination_model = {}  # Destination
         destination_model['id'] = '9fab83da-98cb-4f18-a7ba-b6f0435c9673'
         destination_model['name'] = 'testString'
         destination_model['type'] = 'ibm_cloud_database'
@@ -968,7 +1024,6 @@ class TestModel_DestinationCollection:
         destination_model['state'] = 'not_started'
         destination_model['created_at'] = '2019-01-01T12:00:00Z'
         destination_model['updated_at'] = '2019-01-01T12:00:00Z'
-        destination_model['crn'] = 'testString'
 
         # Construct a json representation of a DestinationCollection model
         destination_collection_model_json = {}
@@ -989,6 +1044,74 @@ class TestModel_DestinationCollection:
         # Convert model instance back to dict and verify no loss of data
         destination_collection_model_json2 = destination_collection_model.to_dict()
         assert destination_collection_model_json2 == destination_collection_model_json
+
+
+class TestModel_DestinationPatch:
+    """
+    Test Class for DestinationPatch
+    """
+
+    def test_destination_patch_serialization(self):
+        """
+        Test serialization/deserialization for DestinationPatch
+        """
+
+        # Construct a json representation of a DestinationPatch model
+        destination_patch_model_json = {}
+        destination_patch_model_json['name'] = 'production-postgres-db'
+        destination_patch_model_json['description'] = 'Updated description for production database'
+
+        # Construct a model instance of DestinationPatch by calling from_dict on the json representation
+        destination_patch_model = DestinationPatch.from_dict(destination_patch_model_json)
+        assert destination_patch_model != False
+
+        # Construct a model instance of DestinationPatch by calling from_dict on the json representation
+        destination_patch_model_dict = DestinationPatch.from_dict(destination_patch_model_json).__dict__
+        destination_patch_model2 = DestinationPatch(**destination_patch_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_patch_model == destination_patch_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_patch_model_json2 = destination_patch_model.to_dict()
+        assert destination_patch_model_json2 == destination_patch_model_json
+
+
+class TestModel_IbmCloudDatabaseDestination:
+    """
+    Test Class for IbmCloudDatabaseDestination
+    """
+
+    def test_ibm_cloud_database_destination_serialization(self):
+        """
+        Test serialization/deserialization for IbmCloudDatabaseDestination
+        """
+
+        # Construct a json representation of a IbmCloudDatabaseDestination model
+        ibm_cloud_database_destination_model_json = {}
+        ibm_cloud_database_destination_model_json['id'] = '9fab83da-98cb-4f18-a7ba-b6f0435c9673'
+        ibm_cloud_database_destination_model_json['name'] = 'testString'
+        ibm_cloud_database_destination_model_json['type'] = 'ibm_cloud_database'
+        ibm_cloud_database_destination_model_json['description'] = 'testString'
+        ibm_cloud_database_destination_model_json['state'] = 'not_started'
+        ibm_cloud_database_destination_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        ibm_cloud_database_destination_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+        ibm_cloud_database_destination_model_json['crn'] = 'testString'
+
+        # Construct a model instance of IbmCloudDatabaseDestination by calling from_dict on the json representation
+        ibm_cloud_database_destination_model = IbmCloudDatabaseDestination.from_dict(ibm_cloud_database_destination_model_json)
+        assert ibm_cloud_database_destination_model != False
+
+        # Construct a model instance of IbmCloudDatabaseDestination by calling from_dict on the json representation
+        ibm_cloud_database_destination_model_dict = IbmCloudDatabaseDestination.from_dict(ibm_cloud_database_destination_model_json).__dict__
+        ibm_cloud_database_destination_model2 = IbmCloudDatabaseDestination(**ibm_cloud_database_destination_model_dict)
+
+        # Verify the model instances are equivalent
+        assert ibm_cloud_database_destination_model == ibm_cloud_database_destination_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        ibm_cloud_database_destination_model_json2 = ibm_cloud_database_destination_model.to_dict()
+        assert ibm_cloud_database_destination_model_json2 == ibm_cloud_database_destination_model_json
 
 
 class TestModel_Instance:
@@ -1044,36 +1167,6 @@ class TestModel_Instance:
         # Convert model instance back to dict and verify no loss of data
         instance_model_json2 = instance_model.to_dict()
         assert instance_model_json2 == instance_model_json
-
-
-class TestModel_Token:
-    """
-    Test Class for Token
-    """
-
-    def test_token_serialization(self):
-        """
-        Test serialization/deserialization for Token
-        """
-
-        # Construct a json representation of a Token model
-        token_model_json = {}
-        token_model_json['token'] = 'hvs.CAESIIG_PILmULFYOsEyWHxkZ2mF2a8V...example...p3ZnpWbDF1RUNjUkNTZEg'
-
-        # Construct a model instance of Token by calling from_dict on the json representation
-        token_model = Token.from_dict(token_model_json)
-        assert token_model != False
-
-        # Construct a model instance of Token by calling from_dict on the json representation
-        token_model_dict = Token.from_dict(token_model_json).__dict__
-        token_model2 = Token(**token_model_dict)
-
-        # Verify the model instances are equivalent
-        assert token_model == token_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        token_model_json2 = token_model.to_dict()
-        assert token_model_json2 == token_model_json
 
 
 class TestModel_VaultDedicatedCluster:
@@ -1207,37 +1300,6 @@ class TestModel_VaultDedicatedInstanceEndpoints:
         assert vault_dedicated_instance_endpoints_model_json2 == vault_dedicated_instance_endpoints_model_json
 
 
-class TestModel_InlineObject:
-    """
-    Test Class for InlineObject
-    """
-
-    def test_inline_object_serialization(self):
-        """
-        Test serialization/deserialization for InlineObject
-        """
-
-        # Construct a json representation of a InlineObject model
-        inline_object_model_json = {}
-        inline_object_model_json['name'] = 'production-postgres-db'
-        inline_object_model_json['description'] = 'Updated description for production database'
-
-        # Construct a model instance of InlineObject by calling from_dict on the json representation
-        inline_object_model = InlineObject.from_dict(inline_object_model_json)
-        assert inline_object_model != False
-
-        # Construct a model instance of InlineObject by calling from_dict on the json representation
-        inline_object_model_dict = InlineObject.from_dict(inline_object_model_json).__dict__
-        inline_object_model2 = InlineObject(**inline_object_model_dict)
-
-        # Verify the model instances are equivalent
-        assert inline_object_model == inline_object_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        inline_object_model_json2 = inline_object_model.to_dict()
-        assert inline_object_model_json2 == inline_object_model_json
-
-
 class TestModel_CreateDestinationRequestIbmCloudDatabaseDestinationPrototype:
     """
     Test Class for CreateDestinationRequestIbmCloudDatabaseDestinationPrototype
@@ -1271,70 +1333,64 @@ class TestModel_CreateDestinationRequestIbmCloudDatabaseDestinationPrototype:
         assert create_destination_request_ibm_cloud_database_destination_prototype_model_json2 == create_destination_request_ibm_cloud_database_destination_prototype_model_json
 
 
-class TestModel_CreateInstanceDestinationRequest:
+class TestModel_TokenPlainAdminToken:
     """
-    Test Class for CreateInstanceDestinationRequest
+    Test Class for TokenPlainAdminToken
     """
 
-    def test_create_instance_destination_request_serialization(self):
+    def test_token_plain_admin_token_serialization(self):
         """
-        Test serialization/deserialization for CreateInstanceDestinationRequest
+        Test serialization/deserialization for TokenPlainAdminToken
         """
 
-        # Construct a json representation of a CreateInstanceDestinationRequest model
-        create_instance_destination_request_model_json = {}
+        # Construct a json representation of a TokenPlainAdminToken model
+        token_plain_admin_token_model_json = {}
+        token_plain_admin_token_model_json['token'] = 'hvs.CAESIC202dQW-jogohoywlivU-AMllTdeNT0QBiob9OBmyfnGigKImh2cy5yUkxpcmVaZURzTmw5cgtevFoyelBpYkguYW82SlMQyr0Q'
 
-        # Construct a model instance of CreateInstanceDestinationRequest by calling from_dict on the json representation
-        create_instance_destination_request_model = CreateInstanceDestinationRequest.from_dict(create_instance_destination_request_model_json)
-        assert create_instance_destination_request_model != False
+        # Construct a model instance of TokenPlainAdminToken by calling from_dict on the json representation
+        token_plain_admin_token_model = TokenPlainAdminToken.from_dict(token_plain_admin_token_model_json)
+        assert token_plain_admin_token_model != False
 
-        # Construct a model instance of CreateInstanceDestinationRequest by calling from_dict on the json representation
-        create_instance_destination_request_model_dict = CreateInstanceDestinationRequest.from_dict(create_instance_destination_request_model_json).__dict__
-        create_instance_destination_request_model2 = CreateInstanceDestinationRequest(**create_instance_destination_request_model_dict)
+        # Construct a model instance of TokenPlainAdminToken by calling from_dict on the json representation
+        token_plain_admin_token_model_dict = TokenPlainAdminToken.from_dict(token_plain_admin_token_model_json).__dict__
+        token_plain_admin_token_model2 = TokenPlainAdminToken(**token_plain_admin_token_model_dict)
 
         # Verify the model instances are equivalent
-        assert create_instance_destination_request_model == create_instance_destination_request_model2
+        assert token_plain_admin_token_model == token_plain_admin_token_model2
 
         # Convert model instance back to dict and verify no loss of data
-        create_instance_destination_request_model_json2 = create_instance_destination_request_model.to_dict()
-        assert create_instance_destination_request_model_json2 == create_instance_destination_request_model_json
+        token_plain_admin_token_model_json2 = token_plain_admin_token_model.to_dict()
+        assert token_plain_admin_token_model_json2 == token_plain_admin_token_model_json
 
 
-class TestModel_IbmCloudDatabaseDestination:
+class TestModel_TokenWrappedAdminToken:
     """
-    Test Class for IbmCloudDatabaseDestination
+    Test Class for TokenWrappedAdminToken
     """
 
-    def test_ibm_cloud_database_destination_serialization(self):
+    def test_token_wrapped_admin_token_serialization(self):
         """
-        Test serialization/deserialization for IbmCloudDatabaseDestination
+        Test serialization/deserialization for TokenWrappedAdminToken
         """
 
-        # Construct a json representation of a IbmCloudDatabaseDestination model
-        ibm_cloud_database_destination_model_json = {}
-        ibm_cloud_database_destination_model_json['id'] = '9fab83da-98cb-4f18-a7ba-b6f0435c9673'
-        ibm_cloud_database_destination_model_json['name'] = 'testString'
-        ibm_cloud_database_destination_model_json['type'] = 'ibm_cloud_database'
-        ibm_cloud_database_destination_model_json['description'] = 'testString'
-        ibm_cloud_database_destination_model_json['state'] = 'not_started'
-        ibm_cloud_database_destination_model_json['created_at'] = '2019-01-01T12:00:00Z'
-        ibm_cloud_database_destination_model_json['updated_at'] = '2019-01-01T12:00:00Z'
-        ibm_cloud_database_destination_model_json['crn'] = 'testString'
+        # Construct a json representation of a TokenWrappedAdminToken model
+        token_wrapped_admin_token_model_json = {}
+        token_wrapped_admin_token_model_json['wrapped_token'] = 'hvs.CAESIC202dQW-jogohoywlivU-AMllTdeNT0QBiob99htyfnGigKImh2cy5yUkhydtvaZURzTmw5cFV5dFoyelBpYkguYW82SlKhye5c'
 
-        # Construct a model instance of IbmCloudDatabaseDestination by calling from_dict on the json representation
-        ibm_cloud_database_destination_model = IbmCloudDatabaseDestination.from_dict(ibm_cloud_database_destination_model_json)
-        assert ibm_cloud_database_destination_model != False
+        # Construct a model instance of TokenWrappedAdminToken by calling from_dict on the json representation
+        token_wrapped_admin_token_model = TokenWrappedAdminToken.from_dict(token_wrapped_admin_token_model_json)
+        assert token_wrapped_admin_token_model != False
 
-        # Construct a model instance of IbmCloudDatabaseDestination by calling from_dict on the json representation
-        ibm_cloud_database_destination_model_dict = IbmCloudDatabaseDestination.from_dict(ibm_cloud_database_destination_model_json).__dict__
-        ibm_cloud_database_destination_model2 = IbmCloudDatabaseDestination(**ibm_cloud_database_destination_model_dict)
+        # Construct a model instance of TokenWrappedAdminToken by calling from_dict on the json representation
+        token_wrapped_admin_token_model_dict = TokenWrappedAdminToken.from_dict(token_wrapped_admin_token_model_json).__dict__
+        token_wrapped_admin_token_model2 = TokenWrappedAdminToken(**token_wrapped_admin_token_model_dict)
 
         # Verify the model instances are equivalent
-        assert ibm_cloud_database_destination_model == ibm_cloud_database_destination_model2
+        assert token_wrapped_admin_token_model == token_wrapped_admin_token_model2
 
         # Convert model instance back to dict and verify no loss of data
-        ibm_cloud_database_destination_model_json2 = ibm_cloud_database_destination_model.to_dict()
-        assert ibm_cloud_database_destination_model_json2 == ibm_cloud_database_destination_model_json
+        token_wrapped_admin_token_model_json2 = token_wrapped_admin_token_model.to_dict()
+        assert token_wrapped_admin_token_model_json2 == token_wrapped_admin_token_model_json
 
 
 # endregion
