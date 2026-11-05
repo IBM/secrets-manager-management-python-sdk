@@ -54,7 +54,7 @@ class TestSecretsManagerInstanceManagementV2:
     @needscredentials
     def test_create_vault_admintoken(self):
         response = self.secrets_manager_instance_management_service.create_vault_admintoken(
-            id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
+            instance_id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
             response_wrapping=True,
         )
 
@@ -65,7 +65,7 @@ class TestSecretsManagerInstanceManagementV2:
     @needscredentials
     def test_get_instance(self):
         response = self.secrets_manager_instance_management_service.get_instance(
-            id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
+            instance_id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
         )
 
         assert response.get_status_code() == 200
@@ -106,7 +106,7 @@ class TestSecretsManagerInstanceManagementV2:
     def test_get_instance_destination(self):
         response = self.secrets_manager_instance_management_service.get_instance_destination(
             instance_id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
-            destination_id='d6354cf6-e746-469d-ac1b-fd3158292c28',
+            destination_id='4d15682c-fcb4-4a56-93bd-6d1bffb16d4e',
         )
 
         assert response.get_status_code() == 200
@@ -123,7 +123,7 @@ class TestSecretsManagerInstanceManagementV2:
 
         response = self.secrets_manager_instance_management_service.update_instance_destination(
             instance_id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
-            destination_id='d6354cf6-e746-469d-ac1b-fd3158292c28',
+            destination_id='4d15682c-fcb4-4a56-93bd-6d1bffb16d4e',
             destination_patch=destination_patch_model,
         )
 
@@ -132,9 +132,9 @@ class TestSecretsManagerInstanceManagementV2:
         assert ibm_cloud_database_destination is not None
 
     @needscredentials
-    def test_delete_instance_admintokens(self):
-        response = self.secrets_manager_instance_management_service.delete_instance_admintokens(
-            id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
+    def test_delete_vault_admintokens(self):
+        response = self.secrets_manager_instance_management_service.delete_vault_admintokens(
+            instance_id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
         )
 
         assert response.get_status_code() == 204
@@ -143,7 +143,7 @@ class TestSecretsManagerInstanceManagementV2:
     def test_delete_instance_destination(self):
         response = self.secrets_manager_instance_management_service.delete_instance_destination(
             instance_id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
-            destination_id='d6354cf6-e746-469d-ac1b-fd3158292c28',
+            destination_id='4d15682c-fcb4-4a56-93bd-6d1bffb16d4e',
         )
 
         assert response.get_status_code() == 202

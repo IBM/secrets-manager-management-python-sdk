@@ -22,7 +22,7 @@ the Vault Dedicated plan.
 - Get service instance details including cluster state, endpoints, and key management
 service.
 - Generate a Vault admin token for authenticating to your Vault Dedicated cluster.
-- Revoke all active Vault admin tokens.
+- Delete all active Vault admin tokens.
 - Request payloads must not exceed 1 MB; requests larger than this limit will be rejected
 with a `413 Payload Too Large` response.
 
@@ -111,7 +111,7 @@ class SecretsManagerInstanceManagementV2(BaseService):
 
     def create_vault_admintoken(
         self,
-        id: str,
+        instance_id: str,
         *,
         response_wrapping: Optional[bool] = None,
         **kwargs,
@@ -121,11 +121,11 @@ class SecretsManagerInstanceManagementV2(BaseService):
 
         Generate a Vault admin token for authenticating to your Vault Dedicated cluster.
         The token is valid for 1 hour and grants administrative privileges. Use only for
-        initial setup and cluster management, then revoke immediately. Optionally, set
+        initial setup and cluster management, then delete immediately. Optionally, set
         response_wrapping to true in the request body to receive a Vault response-wrapped
         token instead of a plain admin token.
 
-        :param str id: Secrets Manager instance ID.
+        :param str instance_id: Secrets Manager instance ID.
         :param bool response_wrapping: (optional) If true, returns a Vault
                response-wrapped token (wrapped_token). If false or absent, returns a plain
                admin token (token).
@@ -134,8 +134,8 @@ class SecretsManagerInstanceManagementV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Token` object
         """
 
-        if not id:
-            raise ValueError('id must be provided')
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -156,10 +156,10 @@ class SecretsManagerInstanceManagementV2(BaseService):
             del kwargs['headers']
         headers['Accept'] = 'application/json'
 
-        path_param_keys = ['id']
-        path_param_values = self.encode_path_vars(id)
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v2/instances/{id}/admintokens'.format(**path_param_dict)
+        url = '/v2/instances/{instance_id}/admintokens'.format(**path_param_dict)
         request = self.prepare_request(
             method='POST',
             url=url,
@@ -170,30 +170,30 @@ class SecretsManagerInstanceManagementV2(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def delete_instance_admintokens(
+    def delete_vault_admintokens(
         self,
-        id: str,
+        instance_id: str,
         **kwargs,
     ) -> DetailedResponse:
         """
         Delete admin tokens.
 
-        Revoke all active Vault admin tokens. This immediately invalidates all existing
-        admin tokens.
+        Delete all active Vault admin tokens. This immediately invalidates all existing
+        admin tokens including wrapped tokens.
 
-        :param str id: Secrets Manager instance ID.
+        :param str instance_id: Secrets Manager instance ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
         """
 
-        if not id:
-            raise ValueError('id must be provided')
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
             service_version='V2',
-            operation_id='delete_instance_admintokens',
+            operation_id='delete_vault_admintokens',
         )
         headers.update(sdk_headers)
 
@@ -201,10 +201,10 @@ class SecretsManagerInstanceManagementV2(BaseService):
             headers.update(kwargs.get('headers'))
             del kwargs['headers']
 
-        path_param_keys = ['id']
-        path_param_values = self.encode_path_vars(id)
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v2/instances/{id}/admintokens'.format(**path_param_dict)
+        url = '/v2/instances/{instance_id}/admintokens'.format(**path_param_dict)
         request = self.prepare_request(
             method='DELETE',
             url=url,
@@ -220,7 +220,7 @@ class SecretsManagerInstanceManagementV2(BaseService):
 
     def get_instance(
         self,
-        id: str,
+        instance_id: str,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -229,14 +229,14 @@ class SecretsManagerInstanceManagementV2(BaseService):
         Get service instance details including cluster state, endpoints, and key
         management service.
 
-        :param str id: Secrets Manager instance ID.
+        :param str instance_id: Secrets Manager instance ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Instance` object
         """
 
-        if not id:
-            raise ValueError('id must be provided')
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -250,10 +250,10 @@ class SecretsManagerInstanceManagementV2(BaseService):
             del kwargs['headers']
         headers['Accept'] = 'application/json'
 
-        path_param_keys = ['id']
-        path_param_values = self.encode_path_vars(id)
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v2/instances/{id}'.format(**path_param_dict)
+        url = '/v2/instances/{instance_id}'.format(**path_param_dict)
         request = self.prepare_request(
             method='GET',
             url=url,

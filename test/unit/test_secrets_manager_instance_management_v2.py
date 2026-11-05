@@ -121,12 +121,12 @@ class TestCreateVaultAdmintoken:
         )
 
         # Set up parameter values
-        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
         response_wrapping = True
 
         # Invoke method
         response = _service.create_vault_admintoken(
-            id,
+            instance_id,
             response_wrapping=response_wrapping,
             headers={},
         )
@@ -164,11 +164,11 @@ class TestCreateVaultAdmintoken:
         )
 
         # Set up parameter values
-        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Invoke method
         response = _service.create_vault_admintoken(
-            id,
+            instance_id,
             headers={},
         )
 
@@ -202,11 +202,11 @@ class TestCreateVaultAdmintoken:
         )
 
         # Set up parameter values
-        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "id": id,
+            "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
@@ -223,15 +223,15 @@ class TestCreateVaultAdmintoken:
         self.test_create_vault_admintoken_value_error()
 
 
-class TestDeleteInstanceAdmintokens:
+class TestDeleteVaultAdmintokens:
     """
-    Test Class for delete_instance_admintokens
+    Test Class for delete_vault_admintokens
     """
 
     @responses.activate
-    def test_delete_instance_admintokens_all_params(self):
+    def test_delete_vault_admintokens_all_params(self):
         """
-        delete_instance_admintokens()
+        delete_vault_admintokens()
         """
         # Set up mock
         url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/admintokens')
@@ -242,11 +242,11 @@ class TestDeleteInstanceAdmintokens:
         )
 
         # Set up parameter values
-        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Invoke method
-        response = _service.delete_instance_admintokens(
-            id,
+        response = _service.delete_vault_admintokens(
+            instance_id,
             headers={},
         )
 
@@ -254,19 +254,19 @@ class TestDeleteInstanceAdmintokens:
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
-    def test_delete_instance_admintokens_all_params_with_retries(self):
-        # Enable retries and run test_delete_instance_admintokens_all_params.
+    def test_delete_vault_admintokens_all_params_with_retries(self):
+        # Enable retries and run test_delete_vault_admintokens_all_params.
         _service.enable_retries()
-        self.test_delete_instance_admintokens_all_params()
+        self.test_delete_vault_admintokens_all_params()
 
-        # Disable retries and run test_delete_instance_admintokens_all_params.
+        # Disable retries and run test_delete_vault_admintokens_all_params.
         _service.disable_retries()
-        self.test_delete_instance_admintokens_all_params()
+        self.test_delete_vault_admintokens_all_params()
 
     @responses.activate
-    def test_delete_instance_admintokens_value_error(self):
+    def test_delete_vault_admintokens_value_error(self):
         """
-        test_delete_instance_admintokens_value_error()
+        test_delete_vault_admintokens_value_error()
         """
         # Set up mock
         url = preprocess_url('/v2/instances/fe5c5c27-3e44-474a-9484-55892e12d6d1/admintokens')
@@ -277,25 +277,25 @@ class TestDeleteInstanceAdmintokens:
         )
 
         # Set up parameter values
-        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "id": id,
+            "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.delete_instance_admintokens(**req_copy)
+                _service.delete_vault_admintokens(**req_copy)
 
-    def test_delete_instance_admintokens_value_error_with_retries(self):
-        # Enable retries and run test_delete_instance_admintokens_value_error.
+    def test_delete_vault_admintokens_value_error_with_retries(self):
+        # Enable retries and run test_delete_vault_admintokens_value_error.
         _service.enable_retries()
-        self.test_delete_instance_admintokens_value_error()
+        self.test_delete_vault_admintokens_value_error()
 
-        # Disable retries and run test_delete_instance_admintokens_value_error.
+        # Disable retries and run test_delete_vault_admintokens_value_error.
         _service.disable_retries()
-        self.test_delete_instance_admintokens_value_error()
+        self.test_delete_vault_admintokens_value_error()
 
 
 # endregion
@@ -359,11 +359,11 @@ class TestGetInstance:
         )
 
         # Set up parameter values
-        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Invoke method
         response = _service.get_instance(
-            id,
+            instance_id,
             headers={},
         )
 
@@ -397,11 +397,11 @@ class TestGetInstance:
         )
 
         # Set up parameter values
-        id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
+        instance_id = 'fe5c5c27-3e44-474a-9484-55892e12d6d1'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "id": id,
+            "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
