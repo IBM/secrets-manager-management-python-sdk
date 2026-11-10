@@ -86,7 +86,7 @@ class TestSecretsManagerInstanceManagementV2Examples:
             # begin-create_vault_admintoken
 
             response = secrets_manager_instance_management_service.create_vault_admintoken(
-                id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
+                instance_id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
             )
             token = response.get_result()
 
@@ -108,7 +108,7 @@ class TestSecretsManagerInstanceManagementV2Examples:
             # begin-get_instance
 
             response = secrets_manager_instance_management_service.get_instance(
-                id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
+                instance_id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
             )
             instance = response.get_result()
 
@@ -224,19 +224,19 @@ class TestSecretsManagerInstanceManagementV2Examples:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_delete_instance_admintokens_example(self):
+    def test_delete_vault_admintokens_example(self):
         """
-        delete_instance_admintokens request example
+        delete_vault_admintokens request example
         """
         try:
-            # begin-delete_instance_admintokens
+            # begin-delete_vault_admintokens
 
-            response = secrets_manager_instance_management_service.delete_instance_admintokens(
-                id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
+            response = secrets_manager_instance_management_service.delete_vault_admintokens(
+                instance_id='fe5c5c27-3e44-474a-9484-55892e12d6d1',
             )
 
-            # end-delete_instance_admintokens
-            print('\ndelete_instance_admintokens() response status code: ', response.get_status_code())
+            # end-delete_vault_admintokens
+            print('\ndelete_vault_admintokens() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
